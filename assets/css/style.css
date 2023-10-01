@@ -31,3 +31,101 @@
 .width-100 {
     width: 100%;
 }
+
+/* everything below is testing area */
+
+/* hide the checkbox */
+input[type = checkbox] {
+    position: absolute;
+    left: -10000px;
+}
+
+.hello {
+    display: block;
+    perspective: 600px;
+    position: relative;
+    transition: all .1s;
+    width: 250px; height:250px;
+}
+
+.flipping-card {
+    position: relative;
+    transition: all .1s;
+
+    /* make it bigger on hover */
+    &:hover {
+        transform: scale(1.05, 1.05);
+    }
+}
+
+.card {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: inherit;
+    height: inherit;
+    /*Makes a card invisible from behind.*/
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    transition: all .4s ease-in-out;
+}
+
+.front {
+    /* background */
+    background: url("google.com") no-repeat;
+    background-size: cover;
+    /* default rotation values */
+    transform: rotateX(0deg) rotate(0deg);
+}
+
+.back {
+    background: mediumpurple;
+    visibility: hidden;
+    transform: rotateY(-180deg);
+}
+
+input[type=checkbox]:checked {
+    ~ .container {
+        animation: lift .4s linear;
+        .card {
+            animation: lift-shadow .4s linear;
+        }
+        .back {
+            visibility: visible;
+            transform: rotateX(0deg) rotateY(0deg);
+        }
+        .front {
+            transform: rotateY(180deg);
+        }
+    }
+}
+
+@keyframes lift {
+    0% {
+        transform: scale(1,1);
+    }
+    20% {
+        transform: scale(1.2,1.2);
+    }
+    80% {
+        transform: scale(1.1,1.1);
+    }
+    100% {
+        transform: scale (1,1);
+    }
+}
+@keyframes lift-shadow {
+    0% {
+        box-shadow: 0 0 10px rgba(0,0,0,0.6);
+    }
+    20% {
+        box-shadow: 0 0 35px rgba(0,0,0,0.6);
+      }
+      80% {
+        box-shadow: 0 0 35px rgba(0,0,0,0.6);
+      }
+      100% {
+        box-shadow: 0 0 10px rgba(0,0,0,0.6);
+      }
+}
