@@ -6,35 +6,80 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Random Animal Facts</title>
     <link rel="stylesheet" href="./assets/css/reset.css">
-    <link rel="stylesheet" target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/npm/Bulma@0.9.1/css/Bulma.min.css">
+    <!-- <link rel="stylesheet" target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/npm/Bulma@0.9.1/css/Bulma.min.css"> -->
+    <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
     </head>
 
     <body>
-        <header>Zoo Animal Fact generator</header>
+        <header class="hero section has-background-dark">
+            <div class="hero-body">
+                <div class="container custom-text-center">
+                    <h1 class="title custom-color-header">Random Animal Facts</h1>
+                    <p>Feel free to choose your animals</p>
+                </div>
+            </div>
+        </header>
 
-        <section>
-            <figure>
-                <img id="img">
-            </figure>
-            <p id="description"></p>
+        <section class="section has-background-light">
+            <div class="container">
+                <div class="columns">
+                    <div class="column">
+                        <div class="notification is-dark content">
+                            <h2 id="animal-name-1" class="title">Hello</h2>
+                            <figure>
+                                <img id="img-1" src="link here" alt="Picture 1">
+                            </figure>
+                            <p id="description-1" class="is-size-5">Hello</p>
+                        </div>
+                        <button class="button is-info">hello</button>
+                    </div>
+
+                    <div class="column">
+                        <div class="notification is-dark content">
+                            <h2 id="animal-name-2" class="title">Hello</h2>
+                            <figure>
+                                <img id="img-2" src="link here" alt="Picture 2">
+                            </figure>
+                            <!-- has-text-white -->
+                            <p id="description-2" class="is-size-5">Hello there</p>
+                        </div>
+                        <button class="button is-info">hello</button>
+                    </div>
+
+                    <div class="column">
+                        <div class="notification is-dark content">
+                            <h2 id="animal-name-3" class="title">Hello</h2>
+                            <figure>
+                                <img id="img-2" src="link here" alt="Picture 2">
+                            </figure>
+                            <p id="description-3" class="is-size-5">Hello here</p>
+                        </div>
+                        <button class="button is-info">hello</button>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <section>
-            <select>
-                <option></option>
-                <option></option>
-                <option></option>
-                <option></option>
-                <option></option>
-                <option></option>
-            </select>
+        <section class="section has-background-dark">
+            <div class="grid section">
+                <select class="select">
+                    <option>test</option>
+                    <option></option>
+                    <option></option>
+                    <option></option>
+                    <option></option>
+                    <option></option>
+                </select>
+            </div>
 
-            <button id="animal-sound"></button>
-            <button id="animal-song"></button>
+            <div class="justify-content-space-around">
+                <button id="animal-sound" class="button is-primary">Animal Sound</button>
+                <button id="animal-song" class="button is-warning">Animal Song</button>
+            </div>
         </section>
 
-        <footer>Footer</footer>
+        <footer class="footer custom-text-center">Footer</footer>
 
 
 
