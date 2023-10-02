@@ -21,20 +21,28 @@
             </div>
         </header>
 
-        <section class="section has-background-light">
+        <section class="section has-background-light section-height">
             <div class="container">
                 <div class="columns">
                     <div class="column">
-                        <div class="notification is-dark content">
-                            <h2 id="animal-name-1" class="title">Hello</h2>
-                            <figure>
-                                <!-- don't know what the image class do -->
-                                <img id="img-1" class="image is-128x128" src="link here" alt="Picture 1">
-                            </figure>
-                            <p id="description-1" class="is-size-5">Hello</p>
-                        </div>
-                        
+                        <input type="checkbox" id="toggle-1">
+                        <label class="content container picture-size flipping-card" for="toggle-1">
+                            <div class="card front custom-background-color-card">
+                                <h2 id="animal-name-1" class="title">Hello</h2>
+                                <figure>
+                                    <!-- don't know what the image class do -->
+                                    <img id="img-1" class="image is-128x128" src="link here" alt="Picture 1">
+                                </figure>
+                                <p id="description-1" class="is-size-5">Hello</p>
+                            </div>
+
+                            <div class="card back">
+                                <h2>hahahahaha</h2>
+                                <p id="fun-fact-1"></p>
+                            </div>
+                        </label>
                     </div>
+                    <!-- <label class="container picture-size flipping-card" for="toggle"></label> -->
 
                     <div class="column">
                         <div class="notification is-dark content">
@@ -86,7 +94,7 @@
 
         
         <input type="checkbox" id="toggle">
-        <label class="container hello flipping-card" for="toggle">
+        <label class="container picture-size flipping-card" for="toggle">
           <div class="card front"></div>
           <div class="card back">i am not dead</div>
         </label>
