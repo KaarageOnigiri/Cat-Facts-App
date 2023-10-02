@@ -36,8 +36,13 @@
     height: minmax(400, 800);
 }
 
-.custom-background-color-card {
-    background-color: black;
+.custom-background-beige {
+    background-color: beige;
+}
+
+.custom-background-brown {
+    background-color: brown;
+    color: white;
 }
 
 /* everything below is testing area */
