@@ -93,10 +93,11 @@ input[type = checkbox] {
 
 .front {
     /* background */
-    background: url("google.com") no-repeat;
+    background: url("") no-repeat;
     background-size: cover;
     /* default rotation values */
     transform: rotateX(0deg) rotate(0deg);
+    /* can do background color here */
 }
 
 .back {
