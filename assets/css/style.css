@@ -41,8 +41,16 @@
 }
 
 .custom-background-brown {
-    background-color: brown;
+    background-color: rgb(70, 39, 39);
     color: white;
+}
+
+.custom-text-center {
+    text-align: center;
+}
+
+.custom-card-padding {
+    padding: 5%;
 }
 
 /* everything below is testing area */
@@ -64,7 +72,6 @@ input[type = checkbox] {
 .flipping-card {
     position: relative;
     transition: all .1s;
-
     /* make it bigger on hover */
     &:hover {
         transform: scale(1.05, 1.05);
