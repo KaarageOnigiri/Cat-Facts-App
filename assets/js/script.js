@@ -178,3 +178,32 @@ function setPropertyValueWords(value){
             return "very high";
     }
 }
+
+// below are random cat facts section
+
+var factTitle3 = document.getElementById("fact-title-3");
+
+var funFact3 = document.getElementById("fun-fact-3");
+
+animalFactsApiUrl = "https://cat-fact.herokuapp.com/facts";
+
+fetch(animalFactsApiUrl, {
+    method: "GET",
+})
+.then(function(response) {
+    if (response.ok) {
+        response.json().then(function(data) {
+            console.log(data);
+            displayRandomCatFactsData(data);
+        })
+    }
+    else {
+        alert("Error: " + response.status);
+    }
+})
+
+function displayRandomCatFactsData(data) {
+    console.log(Math.floor(Math.random() * data.length));
+    var randomNumber = Math.floor(Math.random() * data.length)
+    funFact3.textContent = data[randomNumber].text;
+}
