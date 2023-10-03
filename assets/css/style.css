@@ -1,3 +1,15 @@
+.custom-background-header {
+    background: linear-gradient(135deg, rgb(140, 214, 132), rgb(86, 153, 255));
+}
+
+.hero-body .container p {
+    color: white;
+}
+
+.custom-margin-right {
+    margin-right: 5%;
+}
+
 .custom-text-center {
     text-align: center;
 }
@@ -36,13 +48,18 @@
     height: minmax(400, 800);
 }
 
-.custom-background-beige {
-    background-color: beige;
+.custom-background-main-body {
+    background-color: rgb(167, 167, 167);
+    background: linear-gradient(135deg, rgb(224, 224, 224), rgb(131, 131, 131));
 }
 
 .custom-background-brown {
     background-color: rgb(70, 39, 39);
     color: white;
+}
+
+.custom-background-second-body {
+    background-color: rgb(97, 97, 97);
 }
 
 .custom-text-center {
@@ -98,10 +115,11 @@ input[type = checkbox] {
     /* default rotation values */
     transform: rotateX(0deg) rotate(0deg);
     /* can do background color here */
+    background-color: rgb(224, 224, 224);
 }
 
 .back {
-    background: beige;
+    background-color: rgb(211, 211, 189);
     visibility: hidden;
     transform: rotateY(-180deg);
 }
