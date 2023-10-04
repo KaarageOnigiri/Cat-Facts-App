@@ -88,7 +88,7 @@ input[type = checkbox] {
     perspective: 600px;
     position: relative;
     transition: all .1s;
-    width: 250px; height:250px;
+    width: 22em; height: 22em;
 }
 
 .flipping-card {
