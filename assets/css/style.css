@@ -65,7 +65,7 @@
 }
 
 .custom-background-second-body {
-    background-color: rgb(131, 116, 116);
+    background: linear-gradient(135deg, rgb(140, 214, 132), rgb(86, 153, 255));
 }
 
 .custom-text-center {
