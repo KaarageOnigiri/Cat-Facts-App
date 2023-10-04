@@ -40,7 +40,10 @@ async function fetchBreedImages(){
 
 async function fetchBreedFacts(){
 
-    for(var counter = 0; counter < 3; counter++){
+    var maximumLifeExpectancy = "";
+    var minimumLifeExpectancy = "";
+    var maximumWeight = "";
+    var minimumWeight = "";
 
     var APIKey = "+v2rPqjZgnuAusp2fgCqLQ==LL2wNNiBCErIm3Fj";
         await fetch('https://api.api-ninjas.com/v1/cats?name=abyssinian', {
@@ -61,90 +64,97 @@ async function fetchBreedFacts(){
             removefromResults(catFacts, "image_link");
             removefromResults(catFacts, "name");
             removefromResults(catFacts, "general_health");
-            
-
-            var randomFactIndex = Math.floor(Math.random() * catFacts.length);
 
             var randomFact = "";
 
-            var propertyValue = catFacts[randomFactIndex][1];
-
-            var propertyValueWords = setPropertyValueWords(propertyValue)
+           
 
             
 
-            if(catFacts[randomFactIndex][0] === "children_friendly"){
+    
 
-                property = "has a " + propertyValueWords + "amount of friendliness towards children." 
+            for(var counter = 0; counter < 13; counter++){
+                
+                var propertyValue = catFacts[counter][1];
+
+                var propertyValueWords = setPropertyValueWords(propertyValue);
+
+                if(catFacts[counter][0] === "children_friendly"){
+
+                    document.getElementById("children-friendly-span").textContent = propertyValueWords 
+                }
+
+                if(catFacts[counter][0] === "family_friendly"){
+
+                    document.getElementById("family-friendly-span").textContent = propertyValueWords
+                }
+
+                if(catFacts[counter][0] === "grooming"){
+
+                    document.getElementById("grooming-span").textContent = propertyValueWords
+                }
+
+                if(catFacts[counter][0] === "intelligence"){
+
+                    document.getElementById("intelligence-span").textContent = propertyValueWords
+                }
+
+                if(catFacts[counter][0] === "length"){
+
+                    document.getElementById("length-span").textContent = catFacts[counter][1];
+                }
+
+                if(catFacts[counter][0] === "max_life_expectancy"){
+
+                    maximumLifeExpectancy = catFacts[counter][1];
+                }
+
+                if(catFacts[counter][0] === "max_weight"){
+
+                    maximumWeight =  catFacts[counter][1];
+                }
+
+                if(catFacts[counter][0] === "min_life_expectancy"){
+
+                    minimumLifeExpectancy = catFacts[counter][1];
+                }
+
+                if(catFacts[counter][0] === "min_weight"){
+
+                    minimumWeight = catFacts[counter][1];
+                }
+
+                if(catFacts[counter][0] === "origin"){
+
+                    document.getElementById("origin-span").textContent = catFacts[counter][1];
+                }
+
+                if(catFacts[counter][0] === "other_pets_friendly"){
+
+                    document.getElementById("other-pets-friendly-span").textContent = propertyValueWords;
+                }
+
+                if(catFacts[counter][0] === "playfulness"){
+
+                    document.getElementById("playfulness-span").textContent = propertyValueWords;
+                }
+
+                if(catFacts[counter][0] === "shedding"){
+
+                    document.getElementById("shedding-span").textContent = propertyValueWords 
+                }
             }
 
-            if(catFacts[randomFactIndex][0] === "family_friendly"){
+            // randomFact = "The " + breedSelectBox.value + "breed "  + property
 
-                property = "has a " + propertyValueWords + "amount of affection towards its owners" 
-            }
+            // var funFact = document.getElementById("fun-fact-" + (counter + 1));
 
-            if(catFacts[randomFactIndex][0] === "grooming"){
-
-                property = "requires a " + propertyValueWords + "amount of grooming work." 
-            }
-
-            if(catFacts[randomFactIndex][0] === "intelligence"){
-
-                property = "has a " + propertyValueWords + "level of intelligence." 
-            }
-
-            if(catFacts[randomFactIndex][0] === "length"){
-
-                property = "has a length of " + data[randomFactIndex] + "." 
-            }
-
-            if(catFacts[randomFactIndex][0] === "max_life_expectancy"){
-
-                property = "has a maximum life expectancy of " + data[randomFactIndex] + " years."
-            }
-
-            if(catFacts[randomFactIndex][0] === "max_weight"){
-
-                property = " has a maximum weight of  " + data[randomFactIndex] + "pounds." 
-            }
-
-            if(catFacts[randomFactIndex][0] === "min_life_expectancy"){
-
-                property = "has a minimum life expectancy of " + data[randomFactIndex] + " years."
-            }
-
-            if(catFacts[randomFactIndex][0] === "min_weight"){
-
-                property = "has a minimum weight of " + data[randomFactIndex] + " pounds." 
-            }
-
-            if(catFacts[randomFactIndex][0] === "origin"){
-
-                property = "originates from  " + data[randomFactIndex] + "." 
-            }
-
-            if(catFacts[randomFactIndex][0] === "other_pets_friendly"){
-
-                property = "has a" + propertyValueWords + "amount of friendliness towards other pets." 
-            }
-
-            if(catFacts[randomFactIndex][0] === "playfulness"){
-
-                property = "has a" + propertyValueWords + "level of playfulness." 
-            }
-
-            if(catFacts[randomFactIndex][0] === "shedding"){
-
-                property = "sheds a " + propertyValueWords + "amount of hair." 
-            }
-
-            randomFact = "The " + breedSelectBox.value + "breed "  + property
-
-            var funFact = document.getElementById("fun-fact-" + (counter + 1));
-
-            funFact.textContent = randomFact;
+            // funFact.textContent = randomFact;
         });
-    }
+    
+
+    document.getElementById("weight-span").textContent = minimumWeight + " - " + maximumWeight + " pounds";
+    document.getElementById("life-expectancy-span").textContent = minimumLifeExpectancy + " - " + maximumLifeExpectancy + " years";
 }
 
 function removefromResults(catFacts, propertyNameToRemove){

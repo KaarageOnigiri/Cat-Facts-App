@@ -64,7 +64,7 @@
 }
 
 .custom-background-second-body {
-    background-color: rgb(97, 97, 97);
+    background-color: rgb(131, 116, 116);
 }
 
 .custom-text-center {
@@ -73,6 +73,39 @@
 
 .custom-card-padding {
     padding: 5%;
+}
+
+.custom-select-cat-breed {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}
+
+.custom-select-cat-breed-dropdown {
+    width: 180px;
+}
+
+.custom-cat-icon {
+    width: 35px;
+    margin-left: 8px;
+    margin-top: 10px;
+}
+
+.custom-cat-icon:hover {
+    width: 40px;
+    cursor: pointer;
+}
+
+.custom-sound-icon {
+    margin-top: 5px;
+    margin-left: 2px;
+    width: 30px;
+}
+
+.custom-sound-icon:hover {
+    width: 35px;
+    cursor: pointer;
 }
 
 /* everything below is testing area */
@@ -88,7 +121,7 @@ input[type = checkbox] {
     perspective: 600px;
     position: relative;
     transition: all .1s;
-    width: 250px; height:250px;
+    width: 22em; height: 22em;
 }
 
 .flipping-card {
@@ -173,3 +206,4 @@ input[type=checkbox]:checked {
         box-shadow: 0 0 10px rgba(0,0,0,0.6);
       }
 }
+
