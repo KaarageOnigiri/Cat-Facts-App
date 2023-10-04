@@ -1,7 +1,17 @@
 .img-class {
     width: 100%;
     height: 100%;
+    /* border-radius: 5%;           testing border glow*/
+    animation: pulsate 1.5s infinite alternate;  
+    border: 0.2rem solid #fff;
     border-radius: 5%;
+    /* padding: 0.4em; */
+    box-shadow: 0 0 .2rem rgb(140, 214, 132),
+                0 0 .2rem rgb(140, 214, 132),
+                0 0 2rem rgb(86, 153, 255),
+                0 0 0.8rem rgb(86, 153, 255),
+                0 0 2.8rem rgb(86, 153, 255),
+                inset 0 0 1.3rem rgb(86, 153, 255); 
 }
 
 .custom-background-header {
@@ -56,7 +66,8 @@
 
 .custom-background-main-body {
     background-color: rgb(167, 167, 167);
-    background: linear-gradient(135deg, rgb(224, 224, 224), rgb(131, 131, 131));
+    /* background: linear-gradient(135deg, rgb(224, 224, 224), rgb(131, 131, 131)); */
+   background: linear-gradient(135deg, rgb(86, 153, 255),rgb(140, 214, 132));
 }
 
 .custom-background-brown {
@@ -166,6 +177,14 @@ input[type = checkbox] {
     border-radius: 5%;
 }
 
+/* Cat banner */
+.bg-img { 
+    background-position: center center;
+    background-repeat:  no-repeat;
+    background-size:  cover;
+    height: 500px;
+}
+
 input[type=checkbox]:checked {
     ~ .container {
         animation: lift .4s linear;
@@ -211,3 +230,30 @@ input[type=checkbox]:checked {
       }
 }
 
+/* testing border or text glow */
+@keyframes pulsate {
+    100% {
+      /* Larger blur radius */
+      text-shadow:
+        0 0 4px #fff,
+        0 0 11px #fff,
+        0 0 19px #fff,
+        0 0 40px #0fa,
+        0 0 80px #0fa,
+        0 0 90px #0fa,
+        0 0 100px #0fa,
+        0 0 150px #0fa;
+    }
+    0% {
+      /* Smaller blur radius */
+      text-shadow:
+        0 0 2px #fff,
+        0 0 4px #fff,
+        0 0 6px #fff,
+        0 0 10px #0fa,
+        0 0 45px #0fa,
+        0 0 55px #0fa,
+        0 0 70px #0fa,
+        0 0 80px #0fa;
+    }
+}

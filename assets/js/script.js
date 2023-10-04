@@ -1,5 +1,8 @@
 var fetchButton = document.getElementById("fetch-breed");
 var breedSelectBox = document.getElementById("breed-select");
+//cards container and default hide
+var cardsContainer = document.querySelector('#cards-container');
+cardsContainer.style.display = 'none';
 
 var imageURLs = []
 
@@ -8,7 +11,10 @@ fetchButton.addEventListener("click", fetchBreedFacts);
 
 async function fetchBreedImages(){
 
-    
+    //show cards container and hide banner
+    var heroContainer = document.querySelector('#cat-hero');
+    heroContainer.style.display = 'none';
+    cardsContainer.style.display = 'block';
 
     for (var counter = 0; counter < 3; counter++){
         var fetchURL = "https://api.thecatapi.com/v1/images/search?breed_ids=" + breedSelectBox.value
@@ -217,15 +223,3 @@ function displayRandomCatFactsData(data) {
     var randomNumber = Math.floor(Math.random() * data.length)
     funFact3.textContent = data[randomNumber].text;
 }
-
-//function for Cat Hero image
-//function initialCatImg() {
-    var heroContainer = document.querySelector('#cat-hero');
-    //heroContainer.styled.display = 'none';
-    var heroImg = document.createElement('i');
-    heroImg.setAttribute('src', "./assets/cat-imgs/catimg2.jpg");
-    heroImg.setAttribute('alt', "Cat Image from https://unsplash.com/s/photos/cat");
-    heroContainer.appendChild(heroImg);
-//
-
-initialCatImg();
