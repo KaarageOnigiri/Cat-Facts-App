@@ -207,3 +207,15 @@ function displayRandomCatFactsData(data) {
     var randomNumber = Math.floor(Math.random() * data.length)
     funFact3.textContent = data[randomNumber].text;
 }
+
+//function for Cat Hero image
+//function initialCatImg() {
+    var heroContainer = document.querySelector('#cat-hero');
+    //heroContainer.styled.display = 'none';
+    var heroImg = document.createElement('i');
+    heroImg.setAttribute('src', "./assets/cat-imgs/catimg2.jpg");
+    heroImg.setAttribute('alt', "Cat Image from https://unsplash.com/s/photos/cat");
+    heroContainer.appendChild(heroImg);
+//
+
+initialCatImg();
