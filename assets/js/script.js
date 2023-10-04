@@ -45,8 +45,14 @@ async function fetchBreedFacts(){
     var maximumWeight = "";
     var minimumWeight = "";
 
+    var selectedBreed = breedSelectBox.options[breedSelectBox.selectedIndex].text;
+
+   var doctoredSelectedBreed = selectedBreed.replace(new RegExp(" ", 'g'), '+');
+
+
+
     var APIKey = "+v2rPqjZgnuAusp2fgCqLQ==LL2wNNiBCErIm3Fj";
-        await fetch('https://api.api-ninjas.com/v1/cats?name=abyssinian', {
+        await fetch('https://api.api-ninjas.com/v1/cats?name=' + doctoredSelectedBreed, {
             headers: {
             'X-Api-Key': APIKey
             }
@@ -73,7 +79,7 @@ async function fetchBreedFacts(){
 
     
 
-            for(var counter = 0; counter < 13; counter++){
+            for(var counter = 0; counter < catFacts.length; counter++){
                 
                 var propertyValue = catFacts[counter][1];
 
