@@ -1,6 +1,7 @@
 .img-class {
     width: 100%;
     height: 100%;
+    border-radius: 5%;
 }
 
 .custom-background-header {
@@ -144,6 +145,7 @@ input[type = checkbox] {
     backface-visibility: hidden;
     transform-style: preserve-3d;
     transition: all .4s ease-in-out;
+    border-radius: 5%;
 }
 
 .front {
@@ -154,12 +156,14 @@ input[type = checkbox] {
     transform: rotateX(0deg) rotate(0deg);
     /* can do background color here */
     background-color: rgb(224, 224, 224);
+    border-radius: 5%;
 }
 
 .back {
     background-color: rgb(211, 211, 189);
     visibility: hidden;
     transform: rotateY(-180deg);
+    border-radius: 5%;
 }
 
 input[type=checkbox]:checked {
