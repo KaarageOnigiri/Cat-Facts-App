@@ -51,8 +51,8 @@ async function fetchBreedImages(){
                 
                     /* Unfortunately, pictures Hb2N6tYTJ.jpg, uvt2Psd9O.jpg, MJWtDz75E.jpg, and g1j3wRjgx.jpg (a picture of an orange tabby cat laying on a bed or couch, 
                     looking rather sad and looking up, toward the camera) are the same pictures but have two different IDs.  As such, the normal method of comparing the IDs to 
-                    elminiate duplicates doesn't work for those four images, so I filtered them out manually. Additionally, the two of the aforementioned images are returned when searching
-                    Abyssinian cats, and the other two are returned when searching for Agean cats. */
+                    elminiate duplicates doesn't work for those four images, so I filtered them out manually. Additionally, the two of the aforementioned images are returned when searching for
+                    Abyssinian cats, and the other two are returned when searching for Agean cats. I have no idea why this is, other than it being a fault of the Cat API.*/
                     if(imageURLs[counter1] === imageURLs[counter2] || imageURLs[0] === "assets/images/black-screen.JPG" || 
                     (imageURLs[counter1] === "https://cdn2.thecatapi.com/images/Hb2N6tYTJ.jpg" && imageURLs[counter2] === "https://cdn2.thecatapi.com/images/uvt2Psd9O.jpg") || 
                     (imageURLs[counter2] === "https://cdn2.thecatapi.com/images/Hb2N6tYTJ.jpg" && imageURLs[counter1] === "https://cdn2.thecatapi.com/images/uvt2Psd9O.jpg") || 
