@@ -17,7 +17,8 @@
             <div class="hero-body">
                 <div class="container custom-text-center">
                     <h1 class="title custom-color-header">Cat Facts App</h1>
-                    <p>Feel free to choose your cat breeds</p>
+                    <h2 id="cat-breed-name" class="is-hidden"></h2>
+                    <p id="cat-breed-description" class="has-text-centered">Feel free to choose your cat breeds</p>
                 </div>
             </div>
         </header>
@@ -64,13 +65,13 @@
                             <!-- why does the color modification not work? -->
                             <div class="card back custom-background-brown">
                                 <h2>Cat Rankings</h2>
-                                <p id="family-friendly">1.  Friendliness towards its owners: <span id="family-friendly-span"></span></p>
-                                <p id="children-friendly">2.  Friendliness towards children: <span id="children-friendly-span"></span></p>
-                                <p id="other-pets-friendly">3.  Friendliness towards other pets: <span id="other-pets-friendly-span"></span></p>
-                                <p id="intelligence">4.  Level of Intelligence: <span id="intelligence-span"></span></p>
-                                <p id="playfulness">5.  Playfulness: <span id="playfulness-span"></span></p>
-                                <p id="grooming">6.  Amount of grooming needed: <span id="grooming-span"></span></p>
-                                <p id="shedding">7.  Amount of hair shed: <span id="shedding-span"></span></p>
+                                <p id="family-friendly">Friendliness towards its owners: <span id="family-friendly-span"></span></p>
+                                <p id="children-friendly">Friendliness towards children: <span id="children-friendly-span"></span></p>
+                                <p id="other-pets-friendly">Friendliness towards other pets: <span id="other-pets-friendly-span"></span></p>
+                                <p id="intelligence">Level of Intelligence: <span id="intelligence-span"></span></p>
+                                <p id="playfulness">Playfulness: <span id="playfulness-span"></span></p>
+                                <p id="grooming">Amount of grooming needed: <span id="grooming-span"></span></p>
+                                <p id="shedding">Amount of hair shed: <span id="shedding-span"></span></p>
                                 
                             </div>
                         </label>
@@ -105,8 +106,61 @@
                     <option value="aege">Aegean</option>
                     <option value="abob">American Bobtail</option>
                     <option value="acur">American Curl</option>
-                    <option value="asho">American Shorthair</option>
                     <option value="awir">American Wirehair</option>
+                    <option value="amau">Arabian Mau</option>
+                    <option value="amis">Australian Mist</option>
+                    <option value="bali">Balinese</option>
+                    <option value="bamb">Bambino</option>
+                    <option value="beng">Bengal</option>
+                    <option value="birm">Birman</option>
+                    <option value="bomb">Bombay</option>
+                    <option value="bslo">British Longhair</option>
+                    <option value="bsho">British Shorthair</option>
+                    <option value="bure">Burmese</option>
+                    <option value="buri">Burmilla</option>
+                    <option value="cspa">California Spangled</option>
+                    <option value="ctif">Chantilly-Tiffany</option>
+                    <option value="char">Chartreux</option>
+                    <option value="chau">Chausie</option>
+                    <option value="csho">Colorpoint Shorthair</option>
+                    <option value="crex">Cornish Rex</option>
+                    <option value="cymr">Cymric</option>
+                    <option value="cypr">Cyprus</option>
+                    <option value="drex">Devon Rex</option>
+                    <option value="dons">Donskoy</option>
+                    <option value="emau">Egyptian Mau</option>
+                    <option value="ebur">European Burmese</option>
+                    <option value="hbro">Havana Brown</option>
+                    <option value="hima">Himalayan</option>
+                    <option value="jbob">Japanese Bobtail</option>
+                    <option value="java">Javanese</option>
+                    <option value="khao">Khao Manee</option>
+                    <option value="kora">Korat</option>
+                    <option value="kuri">Kurilian Bobtail</option>
+                    <option value="lape">LaPerm</option>
+                    <option value="mcoo">Maine Coon</option>
+                    <option value="manx">Manx</option>
+                    <option value="nebe">Nebelung</option>
+                    <option value="ocic">Ocicat</option>
+                    <option value="orie">Oriental</option>
+                    <option value="pers">Persian</option>
+                    <option value="pixi">Pixie-Bob</option>
+                    <option value="raga">Ragamuffin</option>
+                    <option value="ragd">Ragdoll</option>
+                    <option value="rblu">Russian Blue</option>
+                    <option value="sava">Savannah</option>
+                    <option value="sfol">Scottish Fold</option>
+                    <option value="srex">Selkirk Rex</option>
+                    <option value="siam">Siamese</option>
+                    <option value="sibe">Siberian</option>
+                    <option value="sing">Singapura</option>
+                    <option value="snow">Snowshoe</option>
+                    <option value="sphy">Sphynx</option>
+                    <option value="tonk">Tonkinese</option>
+                    <option value="toyg">Toyger</option>
+                    <option value="tang">Turkish Angora</option>
+                    <option value="tvan">Turkish Van</option>
+                    <option value="ycho">York Chocolate</option>
                 </select>
                 <figure class="custom-cat-icon">
                     <img id="fetch-breed" src="./assets/images/cat-icon-button.png">
@@ -128,6 +182,7 @@
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="assets/js/cat-descriptions.js"></script>
         <script src="./assets/js/script.js"></script>
     </body>
 </html>
