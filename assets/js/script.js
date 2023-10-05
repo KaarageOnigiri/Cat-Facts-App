@@ -1,9 +1,14 @@
 var fetchButton = document.getElementById("fetch-breed");
 var breedSelectBox = document.getElementById("breed-select");
 
+var errorMessage = document.getElementById("error-message");
+var errorFound = false;
+
 var breedTitle = document.getElementById("cat-breed-name")
 
+var errorModalCloseButton = document.getElementById("error-modal-close-button");
 
+errorModalCloseButton.addEventListener("click", closeErrorModal);
 
 fetchButton.addEventListener("click", fetchBreedImages);
 fetchButton.addEventListener("click", fetchBreedFacts);
@@ -34,7 +39,12 @@ async function fetchBreedImages(){
 
         await fetch(fetchURL).then(async function(response){
 
-            return response.json();
+            var data = checkForBadFetch(response);
+
+            if(data !== null){
+    
+                return data;
+            }
 
         }).then(function(data){
 
@@ -50,8 +60,8 @@ async function fetchBreedImages(){
                 for(counter2 = 0; counter2 < counter1; counter2++){
                 
                     /* Unfortunately, pictures Hb2N6tYTJ.jpg, uvt2Psd9O.jpg, MJWtDz75E.jpg, and g1j3wRjgx.jpg (a picture of an orange tabby cat laying on a bed or couch, 
-                    looking rather sad and looking up, toward the camera) are the same pictures but have two different IDs.  As such, the normal method of comparing the IDs to 
-                    elminiate duplicates doesn't work for those four images, so I filtered them out manually. Additionally, the two of the aforementioned images are returned when searching for
+                    looking rather sad and looking up, toward the camera) are the same actual images but have four different IDs.  As such, the normal method of comparing the IDs to 
+                    elminiate duplicates doesn't work for those four images, so I filtered them out manually. Additionally, two of the aforementioned images are returned when searching for
                     Abyssinian cats, and the other two are returned when searching for Agean cats. I have no idea why this is, other than it being a fault of the Cat API.*/
                     if(imageURLs[counter1] === imageURLs[counter2] || imageURLs[0] === "assets/images/black-screen.JPG" || 
                     (imageURLs[counter1] === "https://cdn2.thecatapi.com/images/Hb2N6tYTJ.jpg" && imageURLs[counter2] === "https://cdn2.thecatapi.com/images/uvt2Psd9O.jpg") || 
@@ -91,7 +101,17 @@ async function fetchBreedImages(){
             if(duplicateImage === false){
                 counter1++;
             }
+
+        }).catch(function(error){
+
+            catchError(error);
+            errorFound = true;
+            
         });
+
+        if(errorFound === true){
+            break;
+        }
     }
 }
 
@@ -108,6 +128,7 @@ async function fetchBreedFacts(){
    var doctoredSelectedBreed = selectedBreed.replace(new RegExp(" ", 'g'), '+');
 
     var APIKey = "+v2rPqjZgnuAusp2fgCqLQ==LL2wNNiBCErIm3Fj";
+
         await fetch('https://api.api-ninjas.com/v1/cats?name=' + doctoredSelectedBreed, {
             headers: {
             'X-Api-Key': APIKey
@@ -115,7 +136,12 @@ async function fetchBreedFacts(){
 
         }).then(function(response){
 
-            return response.json();
+            var data = checkForBadFetch(response, 1);
+
+            if(data !== null){
+
+                return data;
+            }
 
         }).then(function(data){
 
@@ -208,6 +234,9 @@ async function fetchBreedFacts(){
             // var funFact = document.getElementById("fun-fact-" + (counter + 1));
 
             // funFact.textContent = randomFact;
+        }).catch(function(error){
+
+            catchError(error, 1);
         });
     
 
@@ -217,8 +246,6 @@ async function fetchBreedFacts(){
     var intelligenceRanking = document.getElementById("intelligence");
     if(hasIntelligenceStatistic === false){
 
-        
-
         intelligenceRanking.classList.add("is-hidden");
         intelligenceRanking.classList.remove("is-block");
 
@@ -226,8 +253,6 @@ async function fetchBreedFacts(){
 
         intelligenceRanking.classList.remove("is-hidden");
         intelligenceRanking.classList.add("is-block");
-
-        
     }
 }
 
@@ -290,4 +315,57 @@ function displayRandomCatFactsData(data) {
     console.log(Math.floor(Math.random() * data.length));
     var randomNumber = Math.floor(Math.random() * data.length)
     funFact3.textContent = data[randomNumber].text;
+}
+
+function openModal(){
+    
+    document.getElementById("error-modal").classList.add('is-active');
+    document.getElementById("error-modal").classList.remove('is-hidden');
+}
+
+function closeErrorModal(){
+
+    document.getElementById("error-modal").classList.remove('is-active');
+    document.getElementById("error-modal").classList.add('is-hidden');
+}
+
+function catchError(error, flag = 0){
+
+    document.getElementById("error-modal").classList.add('is-active');
+    document.getElementById("error-modal").classList.remove('is-hidden');
+    
+    
+
+    if(flag === 1){
+
+        errorMessage.textContent = error.message + "!!  This happened when fetching cat facts.";
+
+    } else {
+
+        errorMessage.textContent = error.message + "!!  This happened when fetching cat images.";
+    }
+}
+
+function checkForBadFetch(response, flag = 0){
+
+    if(response.status !== 200){
+
+        document.getElementById("error-modal").classList.add('is-active');
+        document.getElementById("error-modal").classList.remove('is-hidden');
+        
+        if(flag === 1){
+
+            errorMessage.textContent = error.message + "!!  This happened when fetching cat facts.";
+    
+        } else {
+    
+            errorMessage.textContent = error.message + "!!  This happened when fetching cat images.";
+        }
+
+        return null;
+
+    } else {
+
+        return response.json();
+    }
 }
