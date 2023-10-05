@@ -19,6 +19,9 @@ initiation();
 
 var fetchButton = document.getElementById("fetch-breed");
 var breedSelectBox = document.getElementById("breed-select");
+//cards container and default hide
+var cardsContainer = document.querySelector('#cards-container');
+cardsContainer.style.display = 'none';
 
 var imageURLs = []
 
@@ -26,6 +29,13 @@ fetchButton.addEventListener("click", fetchBreedImages);
 fetchButton.addEventListener("click", fetchBreedFacts);
 
 async function fetchBreedImages(){
+
+
+    //show cards container and hide banner
+    var heroContainer = document.querySelector('#cat-hero');
+    heroContainer.style.display = 'none';
+    cardsContainer.style.display = 'block';
+
 
 
 
@@ -233,6 +243,7 @@ function displayRandomCatFactsData(data) {
     var randomNumber = Math.floor(Math.random() * data.length)
     funFact3.textContent = data[randomNumber].text;
 }
+
 // END: random cat facts section
 
 // BEGIN: display image from previous search (need to change the abys to user previous input)
@@ -417,3 +428,4 @@ async function fetchPreviousBreedFacts(){
     document.getElementById("life-expectancy-span").textContent = minimumLifeExpectancy + " - " + maximumLifeExpectancy + " years";
 }
 // END: same as the function above
+
