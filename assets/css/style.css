@@ -1,6 +1,10 @@
 .img-class {
     width: 100%;
     height: 100%;
+
+    object-fit: contain;
+    background-color: black;
+
     /* border-radius: 5%;           testing border glow*/
     animation: pulsate 1.5s infinite alternate;  
     border: 0.2rem solid #fff;
@@ -12,6 +16,7 @@
                 0 0 0.8rem rgb(86, 153, 255),
                 0 0 2.8rem rgb(86, 153, 255),
                 inset 0 0 1.3rem rgb(86, 153, 255); 
+
 }
 
 .custom-background-header {
@@ -190,6 +195,10 @@ input[type = checkbox] {
     border-radius: 5%;
 }
 
+.fit-content{
+    width: fit-content;
+}
+
 .front {
     /* background */
     background: url("") no-repeat;
@@ -245,6 +254,10 @@ input[type=checkbox]:checked {
             transform: rotateY(180deg);
         }
     }
+}
+
+#cat-breed-description{
+    text-align: left;
 }
 
 @keyframes lift {
