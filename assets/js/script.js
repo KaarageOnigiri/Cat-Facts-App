@@ -8,6 +8,7 @@ function initiation() {
         previousUserSearch = "abys";
         localStorage.setItem("previousUserSearch", previousUserSearch);
     }
+    
     // insert userinput here
     fetchPreviousBreedImages();
     fetchPreviousBreedFacts();
@@ -248,6 +249,8 @@ async function fetchPreviousBreedImages(){
 
         }).then(function(data){
 
+            localStorage.setItem("previousUserSearch", previousUserSearch);
+
             var imageURL = data[0].url;
 
             imageURLs.push(imageURL);
@@ -413,4 +416,4 @@ async function fetchPreviousBreedFacts(){
     document.getElementById("weight-span").textContent = minimumWeight + " - " + maximumWeight + " pounds";
     document.getElementById("life-expectancy-span").textContent = minimumLifeExpectancy + " - " + maximumLifeExpectancy + " years";
 }
-// END: same as the function above 
+// END: same as the function above
