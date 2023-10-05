@@ -8,6 +8,7 @@ function initiation() {
         previousUserSearch = "abys";
         localStorage.setItem("previousUserSearch", previousUserSearch);
     }
+    
     // insert userinput here
     fetchPreviousBreedImages();
     fetchPreviousBreedFacts();
@@ -247,6 +248,8 @@ async function fetchPreviousBreedImages(){
             return response.json();
 
         }).then(function(data){
+
+            localStorage.setItem("previousUserSearch", previousUserSearch);
 
             var imageURL = data[0].url;
 
