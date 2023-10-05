@@ -413,4 +413,4 @@ async function fetchPreviousBreedFacts(){
     document.getElementById("weight-span").textContent = minimumWeight + " - " + maximumWeight + " pounds";
     document.getElementById("life-expectancy-span").textContent = minimumLifeExpectancy + " - " + maximumLifeExpectancy + " years";
 }
-// END: same as the function above 
+// END: same as the function above

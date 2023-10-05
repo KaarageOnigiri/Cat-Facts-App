@@ -90,6 +90,7 @@
     width: 35px;
     margin-left: 8px;
     margin-top: 10px;
+    position: relative;
 }
 
 .custom-cat-icon:hover {
@@ -107,6 +108,36 @@
     width: 35px;
     cursor: pointer;
 }
+
+.chat-bubble-wrapper {
+    position: relative;
+}
+
+.chat-bubble {
+    font-family: cursive;
+    font-size: 13px;
+    background-color: rgb(223, 223, 223);
+    color: black;
+    padding: 3.5px;
+    border-radius: 10px;
+    min-width: 65px;
+    position: absolute;
+    left: -30px;
+    
+    bottom : 20px;
+}
+
+.chat-bubble::before {
+    position: absolute;
+    bottom: -4px;
+    left: 20%;
+
+    content: "";
+    border: 4px solid transparent;
+    border-top-color: white;
+    border-bottom: 0;
+}
+
 
 /* everything below is testing area */
 
@@ -159,7 +190,21 @@ input[type = checkbox] {
 .back {
     background-color: rgb(211, 211, 189);
     visibility: hidden;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    
     transform: rotateY(-180deg);
+}
+
+/* here lies the back card paragraph */
+/* #fun-fact-1, #fun-fact-2, #fun-fact-3  */
+
+.fun-fact-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 input[type=checkbox]:checked {
