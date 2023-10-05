@@ -201,10 +201,10 @@ input[type = checkbox] {
 /* #fun-fact-1, #fun-fact-2, #fun-fact-3  */
 
 .fun-fact-wrapper {
+    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    line-height: 2;
 }
 
 input[type=checkbox]:checked {
