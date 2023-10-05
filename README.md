@@ -8,6 +8,8 @@ Requirements and Presentation section from edX Boot Camps Module Seven
 
 ## Acknowledgement
 Cat sounds downloaded from - https://quicksounds.com/library/sounds/cat
+Cat icon downloaded from https://www.flaticon.com/free-icons/cat
+Sound icon downloaded from https://icons8.com/icons/set/sound
 
 ## Project Requirements
 

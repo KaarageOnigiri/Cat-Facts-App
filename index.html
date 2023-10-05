@@ -22,9 +22,12 @@
                 </div>
             </div>
         </header>
-
+        <!-- Cat Banner hide after selection -->
+        <section id="cat-hero" class="hero bg-img" style="background-image: url(./assets/cat-imgs/catimg2.jpg);"
+                 alt="Image from https://unsplash.com/s/photos/cat">
+        </section>
         <!-- the custom color will render everything in here, including the card front -->
-        <section class="section custom-background-main-body section-height">
+        <section id="cards-container" class="section custom-background-main-body section-height">
             <div class="container custom-text-center">
                 <div class="columns">
                     <div class="column">
@@ -89,9 +92,11 @@
                             </div>
 
                             <div class="card back">
-
                                 <h2 id="fact-title-3">Random Cat Fact</h2>
-                                <p id="fun-fact-3"></p>
+                                <div class="fun-fact-wrapper">
+                                    <p id="fun-fact-3"></p>
+                                </div>
+                                
                             </div>
                         </label>
                     </div>
@@ -164,11 +169,22 @@
                 </select>
                 <figure class="custom-cat-icon">
                     <img id="fetch-breed" src="./assets/images/cat-icon-button.png">
+                    <!-- <div class="chat-bubble-wrapper">
+                        <div class="chat-bubble">
+                            Click me!
+                        </div>
+                    </div> -->
                 </figure>
+                <div class="chat-bubble-wrapper">
+                    <div class="chat-bubble">
+                        Click me!
+                    </div>
+                </div>
                 <figure class="custom-sound-icon">
                     <img id="animal-sound" src="./assets/images/sound-icon.png">
                 </figure>
             </div>
+
 
             <section id="error-modal" class="modal">
                 <section class="modal-background is-small">
@@ -180,6 +196,7 @@
                 </section>
                 <button id="error-modal-close-button" class="modal-close is-large" aria-label="close"></button>
             </section>
+
         </section>
 
         <footer class="footer custom-text-center">
