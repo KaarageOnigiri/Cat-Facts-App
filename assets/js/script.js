@@ -412,7 +412,7 @@ function displayPreviousSearches() {
         console.log("did it run");
         var searchHistoryLists = document.createElement("li");
         searchHistoryLists.textContent = [previousUserSearch2[x]];
-        searchHistoryLists.setAttribute("value", previousUserSearch2[x]);
+        searchHistoryLists.setAttribute("value", previousUserSearch1[x]);
         // add css styling here.
         searchHistoryLists.setAttribute("class", ""); 
         searchHistoryLists.addEventListener("click", showPreviousSearches);
@@ -426,9 +426,12 @@ function displayPreviousSearches() {
     }
 }
 
-function showPreviousSearches() {
-    console.log("hah");
-    
+function showPreviousSearches(event) {
+    console.log(previousUserSearch1[0], previousUserSearch2[0]);
+    var catName = event.target.textContent;
+    var catNameValue = event.target.getAttribute("value");
+    console.log(catName, catNameValue);
+
 }
 
 // searchHistory
