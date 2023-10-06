@@ -1,22 +1,3 @@
-// BEGIN: calling local storage
-var previousUserSearch = localStorage.getItem("previousUserSearch");
-
-// console.log(document.getElementById("breed-select").children[1].value);
-function initiation() {
-    console.log(previousUserSearch);
-    if (!previousUserSearch) {
-        previousUserSearch = "abys";
-        localStorage.setItem("previousUserSearch", previousUserSearch);
-    }
-    
-    // insert userinput here
-    fetchPreviousBreedImages();
-    fetchPreviousBreedFacts();
-}
-
-initiation();
-// END: calling local storage
-
 var fetchButton = document.getElementById("fetch-breed");
 var breedSelectBox = document.getElementById("breed-select");
 //cards container and default hide
@@ -34,6 +15,29 @@ errorModalCloseButton.addEventListener("click", closeErrorModal);
 
 fetchButton.addEventListener("click", fetchBreedImages);
 fetchButton.addEventListener("click", fetchBreedFacts);
+
+var searchHistory = document.getElementById("search-history");
+
+// BEGIN: calling local storage
+var previousUserSearch1 = JSON.parse(localStorage.getItem("previousUserSearch1"));
+var previousUserSearch2 = JSON.parse(localStorage.getItem("previousUserSearch2"));
+
+// console.log(document.getElementById("breed-select").children[1].value);
+function initiation() {
+    console.log(previousUserSearch1);
+    if (!previousUserSearch1) {
+        previousUserSearch1 = [];
+        previousUserSearch2 = [];
+        localStorage.setItem("previousUserSearch1",  JSON.stringify(previousUserSearch1));
+        localStorage.setItem("previousUserSearch2",  JSON.stringify(previousUserSearch2));
+    }
+    
+    displayPreviousSearches();
+}
+
+initiation();
+// END: calling local storage
+
 
 async function fetchBreedImages(){
     
@@ -58,12 +62,6 @@ async function fetchBreedImages(){
     var counter1 = 0;
 
     while (counter1 < 3){
-
-
-
-
-
-
         /* Unfortunately, pictures Hb2N6tYTJ.jpg and uvt2Psd9O.jpg are the same pictures but have two different IDs.  This is causing duplicate pictures
         because I have no way of filtering out one of the above, since the IDs are the same!!*/
 
@@ -146,6 +144,8 @@ async function fetchBreedImages(){
             break;
         }
     }
+    previousUserSearch1.unshift(breedSelectBox.value);
+    localStorage.setItem("previousUserSearch1", JSON.stringify(previousUserSearch1));
 }
 
 async function fetchBreedFacts(){
@@ -287,6 +287,9 @@ async function fetchBreedFacts(){
         intelligenceRanking.classList.remove("is-hidden");
         intelligenceRanking.classList.add("is-block");
     }
+    previousUserSearch2.unshift(doctoredSelectedBreed);
+    localStorage.setItem("previousUserSearch2", JSON.stringify(previousUserSearch2));
+    displayPreviousSearches();
 }
 
 function removefromResults(catFacts, propertyNameToRemove){
@@ -403,187 +406,49 @@ function checkForBadFetch(response, flag = 0){
 
 // END: random cat facts section
 
-// BEGIN: display image from previous search (need to change the abys to user previous input)
-async function fetchPreviousBreedImages(){
+function displayPreviousSearches() {
+    
+    for (x = 0; x < 5; x++) {
+        console.log("did it run");
+        var searchHistoryLists = document.createElement("li");
+        searchHistoryLists.textContent = [previousUserSearch2[x]];
+        searchHistoryLists.setAttribute("value", previousUserSearch2[x]);
+        // add css styling here.
+        searchHistoryLists.setAttribute("class", ""); 
+        searchHistoryLists.addEventListener("click", showPreviousSearches);
+        searchHistory.appendChild(searchHistoryLists);
+    }
 
-    // console.log(previousUserSearch);
-
-    for (var counter = 0; counter < 3; counter++){
-        var fetchURL = "https://api.thecatapi.com/v1/images/search?breed_ids=" + previousUserSearch;
-
-        await fetch(fetchURL).then(async function(response){
-
-            return response.json();
-
-        }).then(function(data){
-
-            localStorage.setItem("previousUserSearch", previousUserSearch);
-
-            var imageURL = data[0].url;
-
-            imageURLs.push(imageURL);
-
-            for(var counter2 = 1; counter2 < imageURLs.length; counter2++){
-                
-                if(imageURLs[counter2] === imageURLs[counter2 - 1]){
-                    
-                    counter--;
-                    imageURLs.splice(counter2, 1)
-                    break;
-                }
-            }
-
-            document.getElementById("img-" + (counter + 1)).src = imageURL;
-        });
+    if (searchHistory.children.length >= 10) {
+        for (x = 4; x >= 0; x--) {
+            searchHistory.children[x].remove();
+        }
     }
 }
-// END: display image from previous search 
 
-// BEGIN: same as the function above (adding this just in case I want to modify something within it)
-async function fetchPreviousBreedFacts(){
-
-    var maximumLifeExpectancy = "";
-    var minimumLifeExpectancy = "";
-    var maximumWeight = "";
-    var minimumWeight = "";
-
-    var APIKey = "+v2rPqjZgnuAusp2fgCqLQ==LL2wNNiBCErIm3Fj";
+function showPreviousSearches() {
+    console.log("hah");
     
-    // test section, can be changed to match Gabriel's code
-    var previousUserSearchData;
-    if (previousUserSearch === "abys") {
-        previousUserSearchData = "abyssinian";
-    }
-    if (previousUserSearch === "aege") {
-        previousUserSearchData = "aegean";
-    }
-    if (previousUserSearch === "abob") {
-        previousUserSearchData = "bobtail";
-    }
-    if (previousUserSearch === "acur") {
-        previousUserSearchData = "curl";
-    }
-    if (previousUserSearch === "asho") {
-        previousUserSearchData = "shorthair";
-    }
-    if (previousUserSearch === "awir") {
-        previousUserSearchData = "wirehair";
-    }
-
-    // console.log(previousUserSearchData);
-
-
-    // change abyssnian to variable
-        await fetch('https://api.api-ninjas.com/v1/cats?name=' + previousUserSearchData, {
-            headers: {
-            'X-Api-Key': APIKey
-            }
-
-        }).then(function(response){
-
-            return response.json();
-
-        }).then(function(data){
-
-            console.log(data);
-
-            var catFacts = Object.entries(data[0])
-
-            removefromResults(catFacts, "image_link");
-            removefromResults(catFacts, "name");
-            removefromResults(catFacts, "general_health");
-
-            var randomFact = "";
-
-           
-
-            
-
-    
-
-            for(var counter = 0; counter < 13; counter++){
-                
-                var propertyValue = catFacts[counter][1];
-
-                var propertyValueWords = setPropertyValueWords(propertyValue);
-
-                if(catFacts[counter][0] === "children_friendly"){
-
-                    document.getElementById("children-friendly-span").textContent = propertyValueWords 
-                }
-
-                if(catFacts[counter][0] === "family_friendly"){
-
-                    document.getElementById("family-friendly-span").textContent = propertyValueWords
-                }
-
-                if(catFacts[counter][0] === "grooming"){
-
-                    document.getElementById("grooming-span").textContent = propertyValueWords
-                }
-
-                if(catFacts[counter][0] === "intelligence"){
-
-                    document.getElementById("intelligence-span").textContent = propertyValueWords
-                }
-
-                if(catFacts[counter][0] === "length"){
-
-                    document.getElementById("length-span").textContent = catFacts[counter][1];
-                }
-
-                if(catFacts[counter][0] === "max_life_expectancy"){
-
-                    maximumLifeExpectancy = catFacts[counter][1];
-                }
-
-                if(catFacts[counter][0] === "max_weight"){
-
-                    maximumWeight =  catFacts[counter][1];
-                }
-
-                if(catFacts[counter][0] === "min_life_expectancy"){
-
-                    minimumLifeExpectancy = catFacts[counter][1];
-                }
-
-                if(catFacts[counter][0] === "min_weight"){
-
-                    minimumWeight = catFacts[counter][1];
-                }
-
-                if(catFacts[counter][0] === "origin"){
-
-                    document.getElementById("origin-span").textContent = catFacts[counter][1];
-                }
-
-                if(catFacts[counter][0] === "other_pets_friendly"){
-
-                    document.getElementById("other-pets-friendly-span").textContent = propertyValueWords;
-                }
-
-                if(catFacts[counter][0] === "playfulness"){
-
-                    document.getElementById("playfulness-span").textContent = propertyValueWords;
-                }
-
-                if(catFacts[counter][0] === "shedding"){
-
-                    document.getElementById("shedding-span").textContent = propertyValueWords 
-                }
-            }
-
-            // randomFact = "The " + breedSelectBox.value + "breed "  + property
-
-            // var funFact = document.getElementById("fun-fact-" + (counter + 1));
-
-            // funFact.textContent = randomFact;
-        });
-    
-
-    document.getElementById("weight-span").textContent = minimumWeight + " - " + maximumWeight + " pounds";
-    document.getElementById("life-expectancy-span").textContent = minimumLifeExpectancy + " - " + maximumLifeExpectancy + " years";
 }
-// END: same as the function above
+
+// searchHistory
+
+// for(x = 0; x < 5; x++) {
+//     var searchLists = document.createElement("li");
+//     searchLists.textContent = previousUserInput[x];
+//     searchLists.setAttribute("data", previousUserInput[x]);
+//     searchLists.setAttribute("class", "search-history-list");
+//     searchLists.addEventListener("click", findPreviousWeather);
+//     searchHistoryEl.appendChild(searchLists);
+// }
+
+// if (searchHistoryEl.children.length >= 10) {
+//     for(x = 4; x >= 0; x--) {
+//         searchHistoryEl.children[x].remove();
+//     }
+// }
 
 
+// var selectedBreed = breedSelectBox.options[breedSelectBox.selectedIndex].text;
+
+// var doctoredSelectedBreed = selectedBreed.replace(new RegExp(" ", 'g'), '+');
