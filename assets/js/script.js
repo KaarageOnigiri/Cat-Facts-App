@@ -589,10 +589,10 @@ async function fetchPreviousBreedFacts(){
 //Cat sound button 
  
 const emitSound = () => {
-    var Catfight = "assets/cat_sounds/Cat-fight.mp3";
-    var Catgrowl = "assets/cat_sounds/Cat-growl.mp3";
-    var Catpurr = "assets/cat_sounds/Cat-purr.mp3";
-    var kittenmeow = "assets/cat_sounds/kitten-meow.mp3";
+    var Catfight = "assets/cat-sounds/Cat-fight.mp3";
+    var Catgrowl = "assets/cat-sounds/Cat-growl.mp3";
+    var Catpurr = "assets/cat-sounds/Cat-purr.mp3";
+    var kittenmeow = "assets/cat-sounds/kitten-meow.mp3";
 
     const animalsound = new Audio(kittenmeow);
     animalsound.load();
