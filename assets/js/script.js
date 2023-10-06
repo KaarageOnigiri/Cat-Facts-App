@@ -431,7 +431,7 @@ function showPreviousSearches(event) {
     var catName = event.target.textContent;
     var catNameValue = event.target.getAttribute("value");
     console.log(catName, catNameValue);
-
+    
 }
 
 // searchHistory
