@@ -1,69 +1,61 @@
-# Random-Animal-Facts
-Requirements and Presentation section from edX Boot Camps Module Seven
-## User Story
+# Cat Images and Facts Retriever
 
-## Acceptance Criteria
+## Description
 
-## APIs Used
+Our motivation for building this project was to practice working to create an application as part of a team.  Our original vision for this project was to have an application that calls APIs to retrieve facts about animals and images of animals.  However, we were having trouble finding APIs to use, so we decided to switch to cat breeds instead.  We built this project to practice calling APIs and to practice working in a team, to better simulate what real development would be like.  This project solves the problem of a user needing to find out about various cat breeds in order to choose a type he or she wishes to adopt.  In this project, we acquired experience with calling APIs, and we learned how to collaborate to create an application and how to resolve GitHub merge conflicts.  We also learned how to look for APIs to solve a particular problem and how to change our plans if the original plans weren't working well.
 
-## Acknowledgement
-Cat sounds downloaded from - https://quicksounds.com/library/sounds/cat
-Cat icon downloaded from https://www.flaticon.com/free-icons/cat
-Sound icon downloaded from https://icons8.com/icons/set/sound
+## Technologies Used
 
-## Project Requirements
+This application uses HTML, CSS and JavaScript to create a functioning webpage that changes when the user interacts with various elements.  
 
-You and your group will use everything you’ve learned over the past six modules to create a real-world front-end application that you’ll be able to showcase to potential employers. The user story and acceptance criteria will depend on the project that you create, but your project must fulfil the following requirements:
+For this application, we called [The Cat API](https://thecatapi.com/) to retrieve cat images, the [Cats API](https://api-ninjas.com/api/cats) to retrieve the facts and statistics for specific breeds of cats, and the [Cat Facts API](https://cat-fact.herokuapp.com/#/) to retrieve the random overall cat fact that is displayed on the back of the third card when a breed is chosen.  Please feel free to view the APIs by clicking on their respective links.
 
-* Use a CSS framework other than Bootstrap.
+## Table of Contents (Optional)
 
-* Be deployed to GitHub Pages.
+This README isn't that long, so N/A.
 
-* Be interactive (i.e., accept and respond to user input).
+## Installation
 
-* Use at least two [server-side APIs](https://coding-boot-camp.github.io/full-stack/apis/api-resources).
+N/A
 
-* Does not use alerts, confirms, or prompts (use modals).
+## Usage
 
-* Use client-side storage to store persistent data.
+To use the application, please go to the following link: [https://KaarageOnigiri.github.io/Random-Animal-Facts](https://KaarageOnigiri.github.io/Random-Animal-Facts).  
 
-* Be responsive.
+To start, choose a breed of cat from the dropdown window.  Then, click the cat icon next to the dropdown window.  The application will display up to three images of your chosen cat breed.  You can also click on the card on the right to display facts about the chosen cat breed.  Clicking on the card in the middle will display cat statistics, such as playfulness and amount of required grooming, ranging from very low to very high.  The application will also store and display up to five of your previously chosen cat breeds, and this data will persist when closing and reopening the application.  Clicking on one of those breeds will pull up its information and images again.  If an API call fails, the application will inform the user of this via a modal dialog box.
 
-* Have a polished UI.
+## Credits
 
-* Have a clean repository that meets quality coding standards (file structure, naming conventions, follows best practices for class/id naming conventions, indentation, quality comments, etc.).
+To build this project, I, [Gabriel Morrow](https://github.com/theboss1485), worked with [Dustin Gray](https://github.com/RickiBobbii), [Villy Yeoh](https://github.com/KaarageOnigiri), and [Zack Burnell](https://github.com/ZBurnell).  Please feel free to visit our GitHub profiles by clicking on our names.
 
-* Have a quality README (with unique name, description, technologies used, screenshot, and link to deployed application).
+I used the official Bulma documentation to create a modal dialog box for the purpose of displaying errors.  I copied code from there and made changes as necessary: [https://bulma.io/documentation/components/modal/](https://bulma.io/documentation/components/modal/)
 
-## Presentation Requirements 
+I copied the list of breed descriptions from The Cat API: [https://api.thecatapi.com/v1/breeds](https://api.thecatapi.com/v1/breeds).
 
-Use this [project presentation template](https://docs.google.com/presentation/d/10QaO9KH8HtUXj__81ve0SZcpO5DbMbqqQr4iPpbwKks/edit?usp=sharing) to address the following: 
+We downloaded the cat sounds from [https://quicksounds.com/library/sounds/cat] (https://quicksounds.com/library/sounds/cat)
 
-* Elevator pitch: a one minute description of your application
+We downloaded the cat icon from [https://www.flaticon.com/free-icons/cat] (https://www.flaticon.com/free-icons/cat)
 
-* Concept: What is your user story? What was your motivation for development?
+We downloaded the sound icon from [https://icons8.com/icons/set/sound](https://icons8.com/icons/set/sound)
 
-* Process: What were the technologies used? How were tasks and roles broken down and assigned? What challenges did you encounter? What were your successes?
-
-* Demo: Show your stuff!
-
-* Directions for Future Development
-
-* Links to the deployed application and the GitHub repository
-
-
-## Visuals
-
-![Screenshot of webpage][def]
-
-## Github Link
-
-[Module-Seven Group Project Link](https:/placeholder.com/)
-
+I used the Xpert Learning Assistant AI chatbot to help out with writing the code.
 
 ## License
 
-MIT License
+This project is under an MIT license.  Please see the license in the GitHub repository for more information.
 
-[def]: ./Assets/placeholder.png
+## Badges
 
+We don't have any badges to display.
+
+## Features
+
+This project is an application that displays images, facts, and rankings of various cat breeds.  The user chooses which breeds he or she wishes to view.  The application also stores the user's most recent searches and displays one if the user clicks the button corresponding to that breed.
+
+## How to Contribute
+
+This was an assignment that we completed for a software development bootcamp, so N/A.
+
+## Tests
+
+N/A
