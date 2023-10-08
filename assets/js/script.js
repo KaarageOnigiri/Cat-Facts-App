@@ -1,7 +1,13 @@
+
+
 var fetchButton = document.getElementById("fetch-breed");
 var breedSelectBox = document.getElementById("breed-select");
+var cardOne = document.getElementById("card-1-content");
+var cardTwo = document.getElementById("card-2-content");
+var cardThree = document.getElementById("card-3-content");
+
 //cards container and default hide
-var cardsContainer = document.querySelector('#cards-container');
+var cardsContainer = document.querySelector('#cards-container-outer');
 cardsContainer.style.display = 'none';
 
 var errorMessage = document.getElementById("error-message");
@@ -15,6 +21,11 @@ errorModalCloseButton.addEventListener("click", closeErrorModal);
 
 fetchButton.addEventListener("click", fetchBreedImages);
 fetchButton.addEventListener("click", fetchBreedFacts);
+fetchButton.addEventListener("click", fetchandDisplayRandomCatFact);
+
+cardOne.addEventListener("click", flipCard);
+cardTwo.addEventListener("click", flipCard);
+cardThree.addEventListener("click", flipCard);
 
 var searchHistory = document.getElementById("search-history");
 
@@ -41,13 +52,12 @@ initiation();
 
 async function fetchBreedImages(){
     
-    
     //show cards container and hide banner
     var heroContainer = document.querySelector('#cat-hero');
     heroContainer.style.display = 'none';
     cardsContainer.style.display = 'block';
 
-    var imageURLs = [];
+    imageURLs = [];
 
     var fetchAttempts = 0;
 
@@ -61,16 +71,17 @@ async function fetchBreedImages(){
 
     var counter1 = 0;
 
+    /* This while loop makes certain the system fetches three images.*/
     while (counter1 < 3){
-        /* Unfortunately, pictures Hb2N6tYTJ.jpg and uvt2Psd9O.jpg are the same pictures but have two different IDs.  This is causing duplicate pictures
-        because I have no way of filtering out one of the above, since the IDs are the same!!*/
 
         var duplicateImage = false;
+
         var fetchURL = "https://api.thecatapi.com/v1/images/search?&limit=1&breed_ids=" + breedSelectBox.value + ","
 
+        // Here is the API call to retrieve an image.
         await fetch(fetchURL).then(async function(response){
 
-            var data = checkForBadFetch(response);
+            var data = await checkForBadFetch(response);
 
             if(data !== null){
     
@@ -90,10 +101,11 @@ async function fetchBreedImages(){
                 /* The purpose of this for loop is to eliminate duplicate images. */
                 for(counter2 = 0; counter2 < counter1; counter2++){
                 
-                    /* Unfortunately, pictures Hb2N6tYTJ.jpg, uvt2Psd9O.jpg, MJWtDz75E.jpg, and g1j3wRjgx.jpg (a picture of an orange tabby cat laying on a bed or couch, 
-                    looking rather sad and looking up, toward the camera) are the same actual images but have four different IDs.  As such, the normal method of comparing the IDs to 
-                    elminiate duplicates doesn't work for those four images, so I filtered them out manually. Additionally, two of the aforementioned images are returned when searching for
-                    Abyssinian cats, and the other two are returned when searching for Agean cats. I have no idea why this is, other than it being a fault of the Cat API.*/
+                    /* This if statement compares the current image to the previous images to make sure they are unique.  Unfortunately, pictures Hb2N6tYTJ.jpg, uvt2Psd9O.jpg, MJWtDz75E.jpg, 
+                    and g1j3wRjgx.jpg (a picture of an orange tabby cat laying on a bed or couch, looking rather sad and looking up, toward the camera) are the same actual images
+                    but have four different IDs.  As such, the normal method of comparing the IDs to elminiate duplicates doesn't work for those four images, so I filtered them out manually.
+                    Additionally, two of the aforementioned images are returned when searching for Abyssinian cats, and the other two are returned when searching for Agean cats. 
+                    I have no idea why this is, other than it being a fault of the Cat API.  */
                     if(imageURLs[counter1] === imageURLs[counter2] || imageURLs[0] === "assets/images/black-screen.JPG" || 
                     (imageURLs[counter1] === "https://cdn2.thecatapi.com/images/Hb2N6tYTJ.jpg" && imageURLs[counter2] === "https://cdn2.thecatapi.com/images/uvt2Psd9O.jpg") || 
                     (imageURLs[counter2] === "https://cdn2.thecatapi.com/images/Hb2N6tYTJ.jpg" && imageURLs[counter1] === "https://cdn2.thecatapi.com/images/uvt2Psd9O.jpg") || 
@@ -105,7 +117,7 @@ async function fetchBreedImages(){
                         fetchAttempts++;
 
                         /* There are a couple of cat breeds that only have one image available without using the API key, so for those, I decided
-                        to put a solid black image on each other image card in place of each of the other images. */
+                        to put a black image on each of the other image cards in place of each of the other images. */
                         if(fetchAttempts === 15){
 
                             document.getElementById("img-" + (counter1 + 1)).src = "assets/images/black-screen.JPG"
@@ -119,6 +131,7 @@ async function fetchBreedImages(){
                     }
                 }
 
+                //If the program gets through the second 'for' loop successfully, the latest tested image will be added to the page.
                 if(counter2 === counter1){
 
                     document.getElementById("img-" + (counter1 + 1)).src = imageURL;   
@@ -136,13 +149,7 @@ async function fetchBreedImages(){
         }).catch(function(error){
 
             catchError(error);
-            errorFound = true;
-            
         });
-
-        if(errorFound === true){
-            break;
-        }
     }
     // if (!breedSelectBox.value === previousUserSearch1[0] || )
     if (breedSelectBox.value ===  previousUserSearch1[0] || breedSelectBox.value ===  previousUserSearch1[1] || breedSelectBox.value ===  previousUserSearch1[2] || breedSelectBox.value ===  previousUserSearch1[3] || breedSelectBox.value ===  previousUserSearch1[4]) {
@@ -154,6 +161,7 @@ async function fetchBreedImages(){
     }
 }
 
+// This function fetchs the facts about the various cat breeds from the Cats API.
 async function fetchBreedFacts(){
 
     var hasIntelligenceStatistic = false;
@@ -194,6 +202,8 @@ async function fetchBreedFacts(){
 
             var randomFact = "";
 
+            /* This for loop goes through all the relevant facts from the returned data and displays them or else sets variables so then
+            they can be displayed later.*/
             for(var counter = 0; counter < catFacts.length; counter++){
                 
                 var propertyValue = catFacts[counter][1];
@@ -268,11 +278,6 @@ async function fetchBreedFacts(){
                 }
             }
 
-            // randomFact = "The " + breedSelectBox.value + "breed "  + property
-
-            // var funFact = document.getElementById("fun-fact-" + (counter + 1));
-
-            // funFact.textContent = randomFact;
         }).catch(function(error){
 
             catchError(error, 1);
@@ -304,6 +309,8 @@ async function fetchBreedFacts(){
     }
 }
 
+/* There were a few cat facts I decided to remove from the returned Cats API data.
+This function helps to accomplish that.*/
 function removefromResults(catFacts, propertyNameToRemove){
 
     for (let counter = 0; counter < catFacts.length; counter++) {
@@ -315,6 +322,29 @@ function removefromResults(catFacts, propertyNameToRemove){
     }
 }
 
+// This function flips a card when the card is clicked.
+function flipCard(event){
+
+    switch(event.currentTarget){
+
+        case cardOne:
+            var toggleOne = document.getElementById("toggle-1");
+            toggleOne.checked = !toggleOne.checked;
+            break;
+        case cardTwo:
+            var toggleTwo = document.getElementById("toggle-2");
+            toggleTwo.checked = !toggleTwo.checked;
+            break;
+        case cardThree:
+            var toggleThree = document.getElementById("toggle-3");
+            toggleThree.checked = !toggleThree.checked;
+            break;
+        default:
+            break;
+    }
+}
+
+// This function changes the numbers in the returned data from the Cats API from (1 to 5) to ('very low' to 'very high')
 function setPropertyValueWords(value){
 
     switch(value){
@@ -336,45 +366,40 @@ function setPropertyValueWords(value){
     }
 }
 
-// BEGIN: random cat facts section
-var factTitle3 = document.getElementById("fact-title-3");
+async function fetchandDisplayRandomCatFact(){
 
-var funFact3 = document.getElementById("fun-fact-3");
+    var funFact3 = document.getElementById("fun-fact-3");
 
-animalFactsApiUrl = "https://cat-fact.herokuapp.com/facts";
+    animalFactsApiUrl = "https://cat-fact.herokuapp.com/facts";
 
-fetch(animalFactsApiUrl, {
-    method: "GET",
-})
-.then(function(response) {
-    if (response.ok) {
-        response.json().then(function(data) {
-            displayRandomCatFactsData(data);
-        })
-    }
-    else {
-        alert("Error: " + response.status);
-    }
-})
+    await fetch(animalFactsApiUrl, {
 
-function displayRandomCatFactsData(data) {
-    var randomNumber = Math.floor(Math.random() * data.length)
-    funFact3.textContent = data[randomNumber].text;
+        method: "GET",
+
+    }).then(async function(response) {
+        
+        var data = await checkForBadFetch(response);
+
+        if(data !== null){
+
+            var randomNumber = Math.floor(Math.random() * data.length)
+            funFact3.textContent = data[randomNumber].text;
+        }
+
+    }).catch(function(error){
+
+        catchError(error, 2);
+    });
 }
 
-
-function openModal(){
-    
-    document.getElementById("error-modal").classList.add('is-active');
-    document.getElementById("error-modal").classList.remove('is-hidden');
-}
-
+// This function closes the error modal if it is displayed after an error is thrown or returned.
 function closeErrorModal(){
 
     document.getElementById("error-modal").classList.remove('is-active');
     document.getElementById("error-modal").classList.add('is-hidden');
 }
 
+// This function displays the error modal if an error is returned from a fetch call.
 function catchError(error, flag = 0){
 
     document.getElementById("error-modal").classList.add('is-active');
@@ -384,14 +409,21 @@ function catchError(error, flag = 0){
 
     if(flag === 1){
 
-        errorMessage.textContent = error.message + "!!  This happened when fetching cat facts.";
+        errorMessage.textContent = error.message + "!!  This happened when fetching cat statistics.";
+
+    } else if(flag === 2){
+
+        errorMessage.textContent = error.message + "!! This happened when fetching a random cat fact."
 
     } else {
 
-        errorMessage.textContent = error.message + "!!  This happened when fetching cat images.";
+        errorMessage.textContent = error.message + "!!  This happened when fetching cat images."
     }
+
+    errorMessage.textContent += "This tends to happen when submitting large numbers of requests at once.  Please wait a few moments and try again.";
 }
 
+// If there is a bad fetch response (I defined that to mean something other than 200), the system displays the error modal.
 function checkForBadFetch(response, flag = 0){
 
     if(response.status !== 200){
@@ -401,11 +433,15 @@ function checkForBadFetch(response, flag = 0){
         
         if(flag === 1){
 
-            errorMessage.textContent = error.message + "!!  This happened when fetching cat facts.";
+            errorMessage.textContent = response.status + "!!  This happened when fetching cat statistics.";
     
+        } else if(flag === 2){
+
+            errorMessage.textContent = response.status + "!! This happened when fetching a random cat fact."
+
         } else {
     
-            errorMessage.textContent = error.message + "!!  This happened when fetching cat images.";
+            errorMessage.textContent = response.status + "!!  This happened when fetching cat images.";
         }
 
         return null;
@@ -666,7 +702,7 @@ async function fetchBreedClickedFacts(catName){
             var randomFact = "";
 
             for(var counter = 0; counter < catFacts.length; counter++){
-                
+       
                 var propertyValue = catFacts[counter][1];
 
                 var propertyValueWords = setPropertyValueWords(propertyValue);
@@ -739,15 +775,17 @@ async function fetchBreedClickedFacts(catName){
                 }
             }
 
+
         }).catch(function(error){
 
             catchError(error, 1);
+
         });
     
-
     document.getElementById("weight-span").textContent = minimumWeight + " - " + maximumWeight + " pounds";
     document.getElementById("life-expectancy-span").textContent = minimumLifeExpectancy + " - " + maximumLifeExpectancy + " years";
 
+// <<<<<<< feature/add-search-history-section
     var intelligenceRanking = document.getElementById("intelligence");
     if(hasIntelligenceStatistic === false){
 
@@ -755,6 +793,26 @@ async function fetchBreedClickedFacts(catName){
         intelligenceRanking.classList.remove("is-block");
 
     } else {
+
+//Cat sound button 
+        
+        const emitSound = () => {
+            var Catfight = "assets/cat-sounds/Cat-fight.mp3";
+            var Catgrowl = "assets/cat-sounds/Cat-growl.mp3";
+            var Catpurr = "assets/cat-sounds/Cat-purr.mp3";
+            var kittenmeow = "assets/cat-sounds/kitten-meow.mp3";
+
+            const animalsound = new Audio(kittenmeow);
+            animalsound.load();
+            animalsound.play();
+
+            console.log('test sound -> ', animalsound);
+        }
+
+        var speakerBtn = document.getElementById("animal-sound")
+        speakerBtn.addEventListener("click", emitSound);
+
+
 
         intelligenceRanking.classList.remove("is-hidden");
         intelligenceRanking.classList.add("is-block");
