@@ -1,5 +1,3 @@
-
-
 var fetchButton = document.getElementById("fetch-breed");
 var breedSelectBox = document.getElementById("breed-select");
 var cardOne = document.getElementById("card-1-content");
@@ -454,6 +452,7 @@ function checkForBadFetch(response, flag = 0){
 
 // END: random cat facts section
 
+// this function displayed the previous 5 cats that user selected
 function displayPreviousSearches() {
     if (previousUserSearch2.length < 6) {
         for (i = 0; i < previousUserSearch2.length; i++) {
@@ -538,16 +537,14 @@ function assignPreviousSearches(event) {
     console.log(previousUserSearch1[0], previousUserSearch2[0]);
     var catName = event.target.textContent;
     var catNameValue = event.target.getAttribute("value");
-    console.log(catName, catNameValue);
 
-    fetchBreedClickedImages(catNameValue);
+    fetchBreedClickedImages(catNameValue, catName);
     fetchBreedClickedFacts(catName);
 }
 
-
-
-async function fetchBreedClickedImages(catNameValue){
-    
+// this function is the same as the ones above, the only difference is that
+// I changed the bring in the clicked value and replace the one searched value
+async function fetchBreedClickedImages(catNameValue, catName){
     
     //show cards container and hide banner
     var heroContainer = document.querySelector('#cat-hero');
@@ -560,8 +557,8 @@ async function fetchBreedClickedImages(catNameValue){
 
     breedTitle.classList.remove("is-hidden");
     breedTitle.classList.remove("is-block");
-
-    var breedDescription = breedDescriptions.find(breed => breed.name === breedSelectBox.options[breedSelectBox.selectedIndex].text);
+    
+    var breedDescription = breedDescriptions.find(breed => breed.name === catName);
 
     document.getElementById("cat-breed-description").textContent = breedDescription.description;
     breedTitle.textContent = "Breed: " + breedDescription.name;
@@ -785,7 +782,6 @@ async function fetchBreedClickedFacts(catName){
     document.getElementById("weight-span").textContent = minimumWeight + " - " + maximumWeight + " pounds";
     document.getElementById("life-expectancy-span").textContent = minimumLifeExpectancy + " - " + maximumLifeExpectancy + " years";
 
-// <<<<<<< feature/add-search-history-section
     var intelligenceRanking = document.getElementById("intelligence");
     if(hasIntelligenceStatistic === false){
 
