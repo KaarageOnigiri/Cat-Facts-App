@@ -144,8 +144,14 @@ async function fetchBreedImages(){
             break;
         }
     }
-    previousUserSearch1.unshift(breedSelectBox.value);
-    localStorage.setItem("previousUserSearch1", JSON.stringify(previousUserSearch1));
+    // if (!breedSelectBox.value === previousUserSearch1[0] || )
+    if (breedSelectBox.value ===  previousUserSearch1[0] || breedSelectBox.value ===  previousUserSearch1[1] || breedSelectBox.value ===  previousUserSearch1[2] || breedSelectBox.value ===  previousUserSearch1[3] || breedSelectBox.value ===  previousUserSearch1[4]) {
+        return;
+    }
+    else {
+        previousUserSearch1.unshift(breedSelectBox.value);
+        localStorage.setItem("previousUserSearch1", JSON.stringify(previousUserSearch1));
+    }
 }
 
 async function fetchBreedFacts(){
@@ -287,9 +293,14 @@ async function fetchBreedFacts(){
         intelligenceRanking.classList.remove("is-hidden");
         intelligenceRanking.classList.add("is-block");
     }
-    previousUserSearch2.unshift(doctoredSelectedBreed);
-    localStorage.setItem("previousUserSearch2", JSON.stringify(previousUserSearch2));
-    displayPreviousSearches();
+    if (doctoredSelectedBreed ===  previousUserSearch2[0] || doctoredSelectedBreed ===  previousUserSearch2[1] || doctoredSelectedBreed ===  previousUserSearch2[2] || doctoredSelectedBreed ===  previousUserSearch2[3] || doctoredSelectedBreed ===  previousUserSearch2[4]) {
+        return;
+    }
+    else {
+        previousUserSearch2.unshift(doctoredSelectedBreed);
+        localStorage.setItem("previousUserSearch2", JSON.stringify(previousUserSearch2));
+        displayPreviousSearches();
+    }
 }
 
 function removefromResults(catFacts, propertyNameToRemove){
@@ -407,23 +418,52 @@ function checkForBadFetch(response, flag = 0){
 // END: random cat facts section
 
 function displayPreviousSearches() {
+    if (previousUserSearch2.length < 5) {
+        for (i = 0; i < previousUserSearch2.length; i++) {
+            var searchHistoryLists = document.createElement("li");
+
+            if (previousUserSearch2[i].split("+")[1] === undefined) {
+                searchHistoryLists.textContent = previousUserSearch2[i].split("+")[0];
     
-    for (x = 0; x < 5; x++) {
-        console.log("did it run");
-        var searchHistoryLists = document.createElement("li");
-        searchHistoryLists.textContent = [previousUserSearch2[x]];
-        searchHistoryLists.setAttribute("value", previousUserSearch1[x]);
-        // add css styling here.
-        searchHistoryLists.setAttribute("class", ""); 
-        searchHistoryLists.addEventListener("click", showPreviousSearches);
-        searchHistory.appendChild(searchHistoryLists);
+            }
+            else {
+                searchHistoryLists.textContent = previousUserSearch2[i].split("+")[0] + " " + previousUserSearch2[i].split("+")[1];
+            }
+            appendChildrenElements(searchHistoryLists, i);
+        }
+        // if ()
+        return;
     }
 
+    for (x = 0; x < 5 && x < previousUserSearch2.length; x++) {
+        var searchHistoryLists = document.createElement("li");
+
+        if (previousUserSearch2[x].split("+")[1] === undefined) {
+            searchHistoryLists.textContent = previousUserSearch2[x].split("+")[0];
+
+        }
+        else {
+            searchHistoryLists.textContent = previousUserSearch2[x].split("+")[0] + " " + previousUserSearch2[x].split("+")[1];
+        } 
+        appendChildrenElements(searchHistoryLists, x);
+    }
+    
+    console.log(searchHistory.children.length);
     if (searchHistory.children.length >= 10) {
-        for (x = 4; x >= 0; x--) {
-            searchHistory.children[x].remove();
+        for (y = 4; y >= 0; y--) {
+            searchHistory.children[y].remove();
         }
     }
+
+
+}
+
+function appendChildrenElements(searchHistoryLists, x) {
+    searchHistoryLists.setAttribute("value", previousUserSearch1[x]);
+    // add css styling here.
+    searchHistoryLists.setAttribute("class", "custom-search-history-button button my-1"); 
+    searchHistoryLists.addEventListener("click", showPreviousSearches);
+    searchHistory.appendChild(searchHistoryLists);
 }
 
 function showPreviousSearches(event) {
@@ -431,27 +471,271 @@ function showPreviousSearches(event) {
     var catName = event.target.textContent;
     var catNameValue = event.target.getAttribute("value");
     console.log(catName, catNameValue);
-    
+
+    fetchBreedClickedImages(catNameValue);
+    fetchBreedClickedFacts(catName);
 }
 
-// searchHistory
+async function fetchBreedClickedImages(catNameValue){
+    
+    
+    //show cards container and hide banner
+    var heroContainer = document.querySelector('#cat-hero');
+    heroContainer.style.display = 'none';
+    cardsContainer.style.display = 'block';
 
-// for(x = 0; x < 5; x++) {
-//     var searchLists = document.createElement("li");
-//     searchLists.textContent = previousUserInput[x];
-//     searchLists.setAttribute("data", previousUserInput[x]);
-//     searchLists.setAttribute("class", "search-history-list");
-//     searchLists.addEventListener("click", findPreviousWeather);
-//     searchHistoryEl.appendChild(searchLists);
-// }
+    var imageURLs = [];
 
-// if (searchHistoryEl.children.length >= 10) {
-//     for(x = 4; x >= 0; x--) {
-//         searchHistoryEl.children[x].remove();
-//     }
-// }
+    var fetchAttempts = 0;
 
+    breedTitle.classList.remove("is-hidden");
+    breedTitle.classList.remove("is-block");
 
-// var selectedBreed = breedSelectBox.options[breedSelectBox.selectedIndex].text;
+    var breedDescription = breedDescriptions.find(breed => breed.name === breedSelectBox.options[breedSelectBox.selectedIndex].text);
 
-// var doctoredSelectedBreed = selectedBreed.replace(new RegExp(" ", 'g'), '+');
+    document.getElementById("cat-breed-description").textContent = breedDescription.description;
+    breedTitle.textContent = "Breed: " + breedDescription.name;
+
+    var counter1 = 0;
+
+    while (counter1 < 3){
+        /* Unfortunately, pictures Hb2N6tYTJ.jpg and uvt2Psd9O.jpg are the same pictures but have two different IDs.  This is causing duplicate pictures
+        because I have no way of filtering out one of the above, since the IDs are the same!!*/
+
+        var duplicateImage = false;
+        var fetchURL = "https://api.thecatapi.com/v1/images/search?&limit=1&breed_ids=" + catNameValue + ","
+
+        await fetch(fetchURL).then(async function(response){
+
+            var data = checkForBadFetch(response);
+
+            if(data !== null){
+    
+                return data;
+            }
+
+        }).then(function(data){
+
+            var imageURL = data[0].url;
+
+            imageURLs.push(imageURL);
+
+            if(counter1 > 0){
+
+                var counter2 = 0
+
+                /* The purpose of this for loop is to eliminate duplicate images. */
+                for(counter2 = 0; counter2 < counter1; counter2++){
+                
+                    /* Unfortunately, pictures Hb2N6tYTJ.jpg, uvt2Psd9O.jpg, MJWtDz75E.jpg, and g1j3wRjgx.jpg (a picture of an orange tabby cat laying on a bed or couch, 
+                    looking rather sad and looking up, toward the camera) are the same actual images but have four different IDs.  As such, the normal method of comparing the IDs to 
+                    elminiate duplicates doesn't work for those four images, so I filtered them out manually. Additionally, two of the aforementioned images are returned when searching for
+                    Abyssinian cats, and the other two are returned when searching for Agean cats. I have no idea why this is, other than it being a fault of the Cat API.*/
+                    if(imageURLs[counter1] === imageURLs[counter2] || imageURLs[0] === "assets/images/black-screen.JPG" || 
+                    (imageURLs[counter1] === "https://cdn2.thecatapi.com/images/Hb2N6tYTJ.jpg" && imageURLs[counter2] === "https://cdn2.thecatapi.com/images/uvt2Psd9O.jpg") || 
+                    (imageURLs[counter2] === "https://cdn2.thecatapi.com/images/Hb2N6tYTJ.jpg" && imageURLs[counter1] === "https://cdn2.thecatapi.com/images/uvt2Psd9O.jpg") || 
+                    (imageURLs[counter1] === "https://cdn2.thecatapi.com/images/MJWtDz75E.jpg" && imageURLs[counter2] === "https://cdn2.thecatapi.com/images/g1j3wRjgx.jpg") || 
+                    (imageURLs[counter2] === "https://cdn2.thecatapi.com/images/MJWtDz75E.jpg" && imageURLs[counter1] === "https://cdn2.thecatapi.com/images/g1j3wRjgx.jpg")) {
+                        
+                        imageURLs.splice(imageURLs.length - 1, 1);
+                        duplicateImage = true;
+                        fetchAttempts++;
+
+                        /* There are a couple of cat breeds that only have one image available without using the API key, so for those, I decided
+                        to put a solid black image on each other image card in place of each of the other images. */
+                        if(fetchAttempts === 15){
+
+                            document.getElementById("img-" + (counter1 + 1)).src = "assets/images/black-screen.JPG"
+                            imageURLs.push("assets/images/black-screen.JPG")
+                            fetchAttempts = 0;
+                            counter1++;
+
+                        }
+
+                        break;
+                    }
+                }
+
+                if(counter2 === counter1){
+
+                    document.getElementById("img-" + (counter1 + 1)).src = imageURL;   
+                }
+
+            } else {
+
+                document.getElementById("img-" + (counter1 + 1)).src = imageURL;
+            }
+
+            if(duplicateImage === false){
+                counter1++;
+            }
+
+        }).catch(function(error){
+
+            catchError(error);
+            errorFound = true;
+            
+        });
+
+        if(errorFound === true){
+            break;
+        }
+    }
+    // if (!breedSelectBox.value === previousUserSearch1[0] || )
+    if (breedSelectBox.value ===  previousUserSearch1[0] || breedSelectBox.value ===  previousUserSearch1[1] || breedSelectBox.value ===  previousUserSearch1[2] || breedSelectBox.value ===  previousUserSearch1[3] || breedSelectBox.value ===  previousUserSearch1[4]) {
+        return;
+    }
+    else {
+        previousUserSearch1.unshift(breedSelectBox.value);
+        localStorage.setItem("previousUserSearch1", JSON.stringify(previousUserSearch1));
+    }
+}
+
+async function fetchBreedClickedFacts(catName){
+
+    var hasIntelligenceStatistic = false;
+    var maximumLifeExpectancy = "";
+    var minimumLifeExpectancy = "";
+    var maximumWeight = "";
+    var minimumWeight = "";
+
+    var selectedBreed = breedSelectBox.options[breedSelectBox.selectedIndex].text;
+
+   var doctoredSelectedBreed = selectedBreed.replace(new RegExp(" ", 'g'), '+');
+
+    var APIKey = "+v2rPqjZgnuAusp2fgCqLQ==LL2wNNiBCErIm3Fj";
+
+        await fetch('https://api.api-ninjas.com/v1/cats?name=' + catName, {
+            headers: {
+            'X-Api-Key': APIKey
+            }
+
+        }).then(function(response){
+
+            var data = checkForBadFetch(response, 1);
+
+            if(data !== null){
+
+                return data;
+            }
+
+        }).then(function(data){
+
+            console.log(data);
+
+            var catFacts = Object.entries(data[0])
+
+            removefromResults(catFacts, "image_link");
+            removefromResults(catFacts, "name");
+            removefromResults(catFacts, "general_health");
+
+            var randomFact = "";
+
+            for(var counter = 0; counter < catFacts.length; counter++){
+                
+                var propertyValue = catFacts[counter][1];
+
+                var propertyValueWords = setPropertyValueWords(propertyValue);
+
+                if(catFacts[counter][0] === "children_friendly"){
+
+                    document.getElementById("children-friendly-span").textContent = propertyValueWords 
+                }
+
+                if(catFacts[counter][0] === "family_friendly"){
+
+                    document.getElementById("family-friendly-span").textContent = propertyValueWords
+                }
+
+                if(catFacts[counter][0] === "grooming"){
+
+                    document.getElementById("grooming-span").textContent = propertyValueWords
+                }
+
+                if(catFacts[counter][0] === "intelligence"){
+
+                    document.getElementById("intelligence-span").textContent = propertyValueWords;
+                    hasIntelligenceStatistic = true;
+
+                }
+
+                if(catFacts[counter][0] === "length"){
+
+                    document.getElementById("length-span").textContent = catFacts[counter][1];
+                }
+
+                if(catFacts[counter][0] === "max_life_expectancy"){
+
+                    maximumLifeExpectancy = catFacts[counter][1];
+                }
+
+                if(catFacts[counter][0] === "max_weight"){
+
+                    maximumWeight =  catFacts[counter][1];
+                }
+
+                if(catFacts[counter][0] === "min_life_expectancy"){
+
+                    minimumLifeExpectancy = catFacts[counter][1];
+                }
+
+                if(catFacts[counter][0] === "min_weight"){
+
+                    minimumWeight = catFacts[counter][1];
+                }
+
+                if(catFacts[counter][0] === "origin"){
+
+                    document.getElementById("origin-span").textContent = catFacts[counter][1];
+                }
+
+                if(catFacts[counter][0] === "other_pets_friendly"){
+
+                    document.getElementById("other-pets-friendly-span").textContent = propertyValueWords;
+                }
+
+                if(catFacts[counter][0] === "playfulness"){
+
+                    document.getElementById("playfulness-span").textContent = propertyValueWords;
+                }
+
+                if(catFacts[counter][0] === "shedding"){
+
+                    document.getElementById("shedding-span").textContent = propertyValueWords 
+                }
+            }
+
+            // randomFact = "The " + breedSelectBox.value + "breed "  + property
+
+            // var funFact = document.getElementById("fun-fact-" + (counter + 1));
+
+            // funFact.textContent = randomFact;
+        }).catch(function(error){
+
+            catchError(error, 1);
+        });
+    
+
+    document.getElementById("weight-span").textContent = minimumWeight + " - " + maximumWeight + " pounds";
+    document.getElementById("life-expectancy-span").textContent = minimumLifeExpectancy + " - " + maximumLifeExpectancy + " years";
+
+    var intelligenceRanking = document.getElementById("intelligence");
+    if(hasIntelligenceStatistic === false){
+
+        intelligenceRanking.classList.add("is-hidden");
+        intelligenceRanking.classList.remove("is-block");
+
+    } else {
+
+        intelligenceRanking.classList.remove("is-hidden");
+        intelligenceRanking.classList.add("is-block");
+    }
+    if (doctoredSelectedBreed ===  previousUserSearch2[0] || doctoredSelectedBreed ===  previousUserSearch2[1] || doctoredSelectedBreed ===  previousUserSearch2[2] || doctoredSelectedBreed ===  previousUserSearch2[3] || doctoredSelectedBreed ===  previousUserSearch2[4]) {
+        return;
+    }
+    else {
+        previousUserSearch2.unshift(doctoredSelectedBreed);
+        localStorage.setItem("previousUserSearch2", JSON.stringify(previousUserSearch2));
+        displayPreviousSearches();
+    }
+}

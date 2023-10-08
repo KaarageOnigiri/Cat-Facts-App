@@ -156,6 +156,16 @@
     
 }
 
+#search-history {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.custom-search-history-button {
+    background-color: rgb(97, 189, 189);
+    color: white;
+}
 
 /* everything below is testing area */
 
