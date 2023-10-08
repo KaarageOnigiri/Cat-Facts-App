@@ -24,14 +24,14 @@ var previousUserSearch2 = JSON.parse(localStorage.getItem("previousUserSearch2")
 
 // console.log(document.getElementById("breed-select").children[1].value);
 function initiation() {
-    console.log(previousUserSearch1);
+    console.log(previousUserSearch1, previousUserSearch2);
     if (!previousUserSearch1) {
         previousUserSearch1 = [];
         previousUserSearch2 = [];
         localStorage.setItem("previousUserSearch1",  JSON.stringify(previousUserSearch1));
         localStorage.setItem("previousUserSearch2",  JSON.stringify(previousUserSearch2));
     }
-    
+    console.log(previousUserSearch2.length);
     displayPreviousSearches();
 }
 
@@ -293,6 +293,7 @@ async function fetchBreedFacts(){
         intelligenceRanking.classList.remove("is-hidden");
         intelligenceRanking.classList.add("is-block");
     }
+
     if (doctoredSelectedBreed ===  previousUserSearch2[0] || doctoredSelectedBreed ===  previousUserSearch2[1] || doctoredSelectedBreed ===  previousUserSearch2[2] || doctoredSelectedBreed ===  previousUserSearch2[3] || doctoredSelectedBreed ===  previousUserSearch2[4]) {
         return;
     }
@@ -418,8 +419,9 @@ function checkForBadFetch(response, flag = 0){
 // END: random cat facts section
 
 function displayPreviousSearches() {
-    if (previousUserSearch2.length < 5) {
+    if (previousUserSearch2.length < 6) {
         for (i = 0; i < previousUserSearch2.length; i++) {
+            
             var searchHistoryLists = document.createElement("li");
 
             if (previousUserSearch2[i].split("+")[1] === undefined) {
@@ -430,8 +432,39 @@ function displayPreviousSearches() {
                 searchHistoryLists.textContent = previousUserSearch2[i].split("+")[0] + " " + previousUserSearch2[i].split("+")[1];
             }
             appendChildrenElements(searchHistoryLists, i);
+
         }
-        // if ()
+        
+        if (previousUserSearch2.length === 2) {
+            if (searchHistory.children.length === 2) {
+                return;
+            }
+            searchHistory.children[2].remove();
+        }
+        if (previousUserSearch2.length === 3) {
+            if (searchHistory.children.length === 3) {
+                return;
+            }
+            searchHistory.children[4].remove();
+            searchHistory.children[3].remove();
+        }
+        if (previousUserSearch2.length === 4) {
+            if (searchHistory.children.length === 4) {
+                return;
+            }
+            searchHistory.children[6].remove();
+            searchHistory.children[5].remove();
+            searchHistory.children[4].remove();
+        }
+        if (previousUserSearch2.length === 5) {
+            if (searchHistory.children.length === 5) {
+                return;
+            }
+            searchHistory.children[8].remove();
+            searchHistory.children[7].remove();
+            searchHistory.children[6].remove();
+            searchHistory.children[5].remove();
+        }
         return;
     }
 
@@ -454,19 +487,18 @@ function displayPreviousSearches() {
             searchHistory.children[y].remove();
         }
     }
-
-
 }
 
 function appendChildrenElements(searchHistoryLists, x) {
+
     searchHistoryLists.setAttribute("value", previousUserSearch1[x]);
     // add css styling here.
     searchHistoryLists.setAttribute("class", "custom-search-history-button button my-1"); 
-    searchHistoryLists.addEventListener("click", showPreviousSearches);
+    searchHistoryLists.addEventListener("click", assignPreviousSearches);
     searchHistory.appendChild(searchHistoryLists);
 }
 
-function showPreviousSearches(event) {
+function assignPreviousSearches(event) {
     console.log(previousUserSearch1[0], previousUserSearch2[0]);
     var catName = event.target.textContent;
     var catNameValue = event.target.getAttribute("value");
@@ -475,6 +507,8 @@ function showPreviousSearches(event) {
     fetchBreedClickedImages(catNameValue);
     fetchBreedClickedFacts(catName);
 }
+
+
 
 async function fetchBreedClickedImages(catNameValue){
     
@@ -705,11 +739,6 @@ async function fetchBreedClickedFacts(catName){
                 }
             }
 
-            // randomFact = "The " + breedSelectBox.value + "breed "  + property
-
-            // var funFact = document.getElementById("fun-fact-" + (counter + 1));
-
-            // funFact.textContent = randomFact;
         }).catch(function(error){
 
             catchError(error, 1);
