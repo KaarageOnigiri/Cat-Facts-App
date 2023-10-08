@@ -540,6 +540,7 @@ function assignPreviousSearches(event) {
 
     fetchBreedClickedImages(catNameValue, catName);
     fetchBreedClickedFacts(catName);
+    fetchandDisplayRandomCatFact();
 }
 
 // this function is the same as the ones above, the only difference is that
