@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Random Animal Facts</title>
+    <title>Cat Images and Facts Retriever</title>
     <link rel="stylesheet" href="./assets/css/reset.css">
     <!-- <link rel="stylesheet" target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/npm/Bulma@0.9.1/css/Bulma.min.css"> -->
     <script src="https://kit.fontawesome.com/81c1324bb8.js" crossorigin="anonymous"></script>
@@ -14,59 +14,53 @@
 
     <body>
         <header class="hero section custom-background-header">
-            <div class="hero-body">
-                <div class="container custom-text-center">
+            <section id="header-container" class="hero-body">
+                <section id="header" class="container custom-text-center">
                     <h1 class="title custom-color-header">Cat Facts App</h1>
                     <h2 id="cat-breed-name" class="is-hidden"></h2>
-                    <p id="cat-breed-description" class="has-text-centered">Feel free to choose your cat breeds</p>
-                </div>
-            </div>
+                    <p id="cat-breed-description" class="has-text-centered">Feel free to choose your cat breed.</p>
+                </section>
+            </section>
         </header>
-        <!-- Cat Banner hide after selection -->
-        <section id="cat-hero" class="hero bg-img" style="background-image: url(./assets/cat-imgs/catimg2.jpg);"
-                 alt="Image from https://unsplash.com/s/photos/cat">
+        <!--  This is the background image before selecting a cat breed.-->
+        <!-- The system will hide the cat banner after the user selects a breed.  The cat banner image is from https://unsplash.com/s/photos/cat"-->
+        <section id="cat-hero" class="hero bg-img" style="background-image: url(./assets/cat-imgs/catimg2.jpg);">
         </section>
-        <!-- the custom color will render everything in here, including the card front -->
-        <section id="cards-container" class="section custom-background-main-body section-height">
-            <div class="container custom-text-center">
-                <div class="columns">
-                    <div class="column">
-                        <input type="checkbox" id="toggle-1">
-                        <label class="content container picture-size flipping-card" for="toggle-1">
-                            <div class="card front">
-                                <!-- <h2 id="animal-name-1" class="title">Hello</h2>
-                                <figure> -->
-                                    <!-- don't know what the image class do -->
-                                    <img id="img-1" class="img-class" src="link here" alt="Picture 1">
-                                <!-- </figure> -->
-                                <!-- <p id="description-1" class="is-size-5">Hello</p> -->
-                            </div>
 
-                            <!-- why does the color modification not work? -->
-                            <div class="card back custom-background-brown">
+        <!-- This is the section that contains the three cards used for images and cat facts. -->
+        <section id="cards-container-outer" class="section custom-background-main-body section-height">
+            <section id="cards-container-middle" class="container custom-text-center">
+                <section id="cards-container-inner" class="columns">
+
+                    <!-- Here, we have the container for card one. -->
+                    <section id="card-1-container" class="column">
+                        <input type="checkbox" id="toggle-1">
+                        <section id="card-1-content" class="content container picture-size flipping-card" for="toggle-1">
+                            <section id="card-1-front" class="card front">
+                                <img id="img-1" class="img-class" src="assets/images/black-screen.JPG" alt="Picture 1">
+                            </section>
+
+                            <!-- On the back of card one, we display cat facts. -->
+                            <section id="card-1-back" class="card back custom-background-brown">
                                 <h2>Cat Facts</h2>
                                 <p id="origin">Origin: <span id="origin-span"></span></p>
                                 <p id="length">Length: <span id="length-span"></span></p>
                                 <p id="weight">Weight: <span id="weight-span"></span></p>
                                 <p id="life-expectancy">Life Expectancy: <span id="life-expectancy-span"></span></p>
-                            </div>
-                        </label>
-                    </div>
-                    <!-- <label class="container picture-size flipping-card" for="toggle"></label> -->
+                            </section>
+                        </section>
+                    </section>
 
-                    <div class="column">
+                    <!-- Here, we have the container for card 2. -->
+                    <section id="card-2-container" class="column">
                         <input type="checkbox" id="toggle-2">
-                        <label class="content container picture-size flipping-card" for="toggle-2">
-                            <div class="card front">
-                                <!-- <h2 id="animal-name-2" class="title">Hello</h2>
-                                <figure> -->
-                                    <img id="img-2" class="img-class" src="link here" alt="Picture 2">
-                                <!-- </figure>
-                                <p id="description-2" class="is-size-5">Hello</p> -->
-                            </div>
+                        <section id="card-2-content" class="content container picture-size flipping-card" for="toggle-2">
+                            <section id="card-2-front" class="card front">
+                                <img id="img-2" class="img-class" src="assets/images/black-screen.JPG" alt="Picture 2">
+                            </section>
 
-                            <!-- why does the color modification not work? -->
-                            <div class="card back custom-background-brown">
+                            <!-- On the back of card two, we display cat rankings.-->
+                            <section id="card-2-back" class="card back custom-background-brown">
                                 <h2>Cat Rankings</h2>
                                 <p id="family-friendly">Friendliness towards its owners: <span id="family-friendly-span"></span></p>
                                 <p id="children-friendly">Friendliness towards children: <span id="children-friendly-span"></span></p>
@@ -75,42 +69,40 @@
                                 <p id="playfulness">Playfulness: <span id="playfulness-span"></span></p>
                                 <p id="grooming">Amount of grooming needed: <span id="grooming-span"></span></p>
                                 <p id="shedding">Amount of hair shed: <span id="shedding-span"></span></p>
-                                
-                            </div>
-                        </label>
-                    </div>
+                            </section>
+                        </section>
+                    </section>
 
-                    <div class="column">
+                    <!-- Here, we have the container for card three. -->
+                    <section id="card-3-container" class="column">
                         <input type="checkbox" id="toggle-3">
-                        <label class="content container picture-size flipping-card" for="toggle-3">
-                            <div class="card front">
-                                <!-- <h2 id="animal-name-3" class="title">Hello</h2>
-                                <figure> -->
-                                    <img id="img-3" class="img-class" src="link here" alt="Picture 3">
-                                <!-- </figure> -->
-                                <!-- <p id="description-3" class="is-size-5">Hello</p> -->
-                            </div>
+                        <section id="card-3-content" class="content container picture-size flipping-card" for="toggle-3">
+                            <section id="card-3-front" class="card front">
+                                <img id="img-3" class="img-class" src="assets/images/black-screen.JPG" alt="Picture 3">
+                            </section>
 
-                            <div class="card back">
+                            <!-- On the back of card three, we display a random cat fact. -->
+                            <section id="card-3-back" class="card back">
                                 <h2 id="fact-title-3">Random Cat Fact</h2>
-                                <div class="fun-fact-wrapper">
+                                <section class="fun-fact-wrapper">
                                     <p id="fun-fact-3"></p>
-                                </div>
-                                
-                            </div>
-                        </label>
-                    </div>
-                </div>
-            </div>
+                                </section>
+                            </section>
+                        </section>
+                    </section>
+                </section>
+            </section>
         </section>
 
-        <section class="section custom-background-second-body">
-            <div class="custom-select-cat-breed">
+        <!-- This is the section for selecting a breed of cat. -->
+        <section id="cat-breed-selection-section" class="section custom-background-second-body">
+            <section id="breed-select-box-container" class="custom-select-cat-breed">
                 <select id="breed-select" class="select custom-select-cat-breed-dropdown">
                     <option value="abys">Abyssinian</option>
                     <option value="aege">Aegean</option>
                     <option value="abob">American Bobtail</option>
                     <option value="acur">American Curl</option>
+                    <option value="asho">American Shorthair</option>
                     <option value="awir">American Wirehair</option>
                     <option value="amau">Arabian Mau</option>
                     <option value="amis">Australian Mist</option>
@@ -167,25 +159,23 @@
                     <option value="tvan">Turkish Van</option>
                     <option value="ycho">York Chocolate</option>
                 </select>
+
+                <!-- Next, we have a couple of custom icons that are basically used as buttons. -->
                 <figure class="custom-cat-icon">
-                    <img id="fetch-breed" src="./assets/images/cat-icon-button.png">
-                    <!-- <div class="chat-bubble-wrapper">
-                        <div class="chat-bubble">
-                            Click me!
-                        </div>
-                    </div> -->
+                    <img id="fetch-breed" src="./assets/images/cat-icon-button.png" alt="cat icon, click to retrieve breed images and information">
                 </figure>
-                <div class="chat-bubble-wrapper">
-                    <div class="chat-bubble">
+                <section id="chat-bubble-wrapper" class="chat-bubble-wrapper">
+                    <section id="chat-bubble" class="chat-bubble">
                         Click me!
-                    </div>
-                </div>
+                    </section>
+                </section>
                 <figure class="custom-sound-icon">
-                    <img id="animal-sound" src="./assets/images/sound-icon.png">
+                    <img id="animal-sound" src="./assets/images/sound-icon.png" alt="sound icon, click to play a cat sound">
                 </figure>
-            </div>
+            </section>
 
 
+            <!-- Here, we have an error modal that displays if a fetch request to on of the APIs fails. -->
             <section id="error-modal" class="modal">
                 <section class="modal-background is-small">
                 </section>
@@ -197,20 +187,22 @@
                 <button id="error-modal-close-button" class="modal-close is-large" aria-label="close"></button>
             </section>
 
-
-
         </section>
             <div id="search-history" class="">
                 <!-- added stuffs here in javascript -->
             </div>
         <section>
 
+
         </section>
 
-        <footer class="footer custom-text-center">
-            <a href="https://www.flaticon.com/free-icons/cat" title="cat icons">Cat icons created by Icon Mela - Flaticon</a>
-            <br>
-            <a target="_blank" href="https://icons8.com/icon/41562/sound">Sound</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+        <!-- In the footer, we have credits for where we took our information and icons from. -->
+        <footer class="footer column custom-text-center">
+            <p><a target="_blank" href="https://icons8.com/icon/41562/sound">Sound</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a></p>
+            <p>Cat statistics by <a target="_blank" href="https://api-ninjas.com/api/cats">The Cats API</a></p>
+            <p><a target="_blank" href="https://cat-fact.herokuapp.com/facts">Random cat facts</a> by <a target="_blank" href="https://cat-fact.herokuapp.com/#/">The Cat Facts API</a></p>
+            <p><a target="_blank" href="https://www.flaticon.com/free-icons/cat" title="cat icons">Cat icons created by Icon Mela - Flaticon</a></p>
+            <p><a target="_blank" href="https://api.thecatapi.com/v1/breeds">Cat Descriptions</a> and images icon by <a target="_blank" href="https://thecatapi.com/">The Cat API</a></p>
         </footer>
 
         <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js" integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>

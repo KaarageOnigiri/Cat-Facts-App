@@ -9,6 +9,7 @@
     animation: pulsate 1.5s infinite alternate;  
     border: 0.2rem solid #fff;
     border-radius: 5%;
+    
     /* padding: 0.4em; */
     box-shadow: 0 0 .2rem rgb(140, 214, 132),
                 0 0 .2rem rgb(140, 214, 132),
@@ -53,6 +54,7 @@
 
 .grid {
     display: grid;
+
     /* grid-template-columns: [xl-start] [sm1-start] 24px 1fr [sml-end] [md-start] minmax(0, 250px) [md-end] 1fr 24px [xl-end]; */
     grid-template-columns: [xl-start] 24px 1fr [md-start] minmax(0, 250px) [md-end] 1fr 24px [xl-end];
 }
@@ -156,6 +158,16 @@
     
 }
 
+#search-history {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.custom-search-history-button {
+    background-color: rgb(97, 189, 189);
+    color: white;
+}
 
 /* everything below is testing area */
 
@@ -176,6 +188,7 @@ input[type = checkbox] {
 .flipping-card {
     position: relative;
     transition: all .1s;
+
     /* make it bigger on hover */
     &:hover {
         transform: scale(1.05, 1.05);
@@ -189,6 +202,7 @@ input[type = checkbox] {
     left: 0;
     width: inherit;
     height: inherit;
+
     /*Makes a card invisible from behind.*/
     backface-visibility: hidden;
     transform-style: preserve-3d;
@@ -204,8 +218,10 @@ input[type = checkbox] {
     /* background */
     background: url("") no-repeat;
     background-size: cover;
+
     /* default rotation values */
     transform: rotateX(0deg) rotate(0deg);
+
     /* can do background color here */
     background-color: rgb(224, 224, 224);
     border-radius: 5%;
