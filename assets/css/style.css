@@ -1,3 +1,24 @@
+html {
+    background: linear-gradient(90deg, rgb(140, 214, 132), rgb(86, 153, 255));
+}
+h2 {
+    font-family: Georgia, Times, serif;
+} 
+#card-2-back {
+    text-align: start;
+}
+#card-2-back span {
+    float: right;
+}
+#card-1-back h2, #card-2-back h2, #fact-title-3 {
+    display: block;
+    text-align: center;
+    padding: 0.5rem;
+    /* linear gradient helped by https://codepen.io/brucebrotherton/pen/wvqjORe */
+    background-image: linear-gradient(-45deg, transparent 10%, rgb(54, 54, 148) 10.5%, #00d1b2 90%, transparent 90.5%);
+    color: beige;
+    font-size: 1.3em;
+}
 .img-class {
     width: 100%;
     height: 100%;
@@ -6,24 +27,28 @@
     background-color: black;
 
     /* border-radius: 5%;           testing border glow*/
-    animation: pulsate 1.5s infinite alternate;  
+    /* animation: pulsate 1.5s infinite alternate;  */
     border: 0.2rem solid #fff;
     border-radius: 5%;
     
     /* padding: 0.4em; */
-    box-shadow: 0 0 .2rem rgb(140, 214, 132),
+    /* box-shadow: 0 0 .2rem rgb(140, 214, 132),
                 0 0 .2rem rgb(140, 214, 132),
                 0 0 2rem rgb(86, 153, 255),
                 0 0 0.8rem rgb(86, 153, 255),
                 0 0 2.8rem rgb(86, 153, 255),
-                inset 0 0 1.3rem rgb(86, 153, 255); 
+                inset 0 0 1.3rem rgb(86, 153, 255);  */
 
 }
 
-.custom-background-header {
+/* .custom-background-header {
     background: linear-gradient(135deg, rgb(140, 214, 132), rgb(86, 153, 255));
+} */
+/* TESTING RESPONSIVENESS */
+#cards-container-inner {
+    display: flex;
+    flex-flow: wrap;
 }
-
 .hero-body .container p {
     color: white;
 }
@@ -72,10 +97,10 @@
 }
 
 .custom-background-main-body {
-    background-color: rgb(167, 167, 167);
+    /* background-color: rgb(167, 167, 167); */
     /* background: linear-gradient(135deg, rgb(224, 224, 224), rgb(131, 131, 131)); */
-   background: linear-gradient(135deg, rgb(86, 153, 255),rgb(140, 214, 132));
-}
+   /* background: linear-gradient(135deg, rgb(86, 153, 255),rgb(140, 214, 132)); */
+} 
 
 .custom-background-brown {
     background-color: rgb(70, 39, 39);
@@ -236,6 +261,8 @@ input[type = checkbox] {
     
     transform: rotateY(-180deg);
     border-radius: 5%;
+    /* test - text color */
+    color: black;
 }
 
 
@@ -305,11 +332,11 @@ input[type=checkbox]:checked {
       }
 }
 
-/* testing border or text glow */
+/* testing border or text glow
 @keyframes pulsate {
     100% {
       /* Larger blur radius */
-      text-shadow:
+      /* text-shadow:
         0 0 4px #fff,
         0 0 11px #fff,
         0 0 19px #fff,
@@ -319,9 +346,9 @@ input[type=checkbox]:checked {
         0 0 100px #0fa,
         0 0 150px #0fa;
     }
-    0% {
+    0% { */
       /* Smaller blur radius */
-      text-shadow:
+      /* text-shadow:
         0 0 2px #fff,
         0 0 4px #fff,
         0 0 6px #fff,
@@ -330,5 +357,5 @@ input[type=checkbox]:checked {
         0 0 55px #0fa,
         0 0 70px #0fa,
         0 0 80px #0fa;
-    }
-}
+    } */
+/* }  */
