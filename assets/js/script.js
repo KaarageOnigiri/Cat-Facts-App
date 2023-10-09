@@ -17,7 +17,6 @@ var errorModalCloseButton = document.getElementById("error-modal-close-button");
 
 errorModalCloseButton.addEventListener("click", closeErrorModal);
 
-
 fetchButton.addEventListener("click", fetchCatData);
 
 async function fetchCatData(){
@@ -27,12 +26,9 @@ async function fetchCatData(){
     await fetchandDisplayRandomCatFact();
 }
 
-
 cardOne.addEventListener("click", flipCard);
 cardTwo.addEventListener("click", flipCard);
 cardThree.addEventListener("click", flipCard);
-
-
 
 var searchHistory = document.getElementById("search-history");
 
@@ -40,7 +36,6 @@ var searchHistory = document.getElementById("search-history");
 var previousUserSearch1 = JSON.parse(localStorage.getItem("previousUserSearch1"));
 var previousUserSearch2 = JSON.parse(localStorage.getItem("previousUserSearch2"));
 
-// console.log(document.getElementById("breed-select").children[1].value);
 function initiation() {
     console.log(previousUserSearch1, previousUserSearch2);
     if (!previousUserSearch1) {
@@ -55,7 +50,6 @@ function initiation() {
 
 initiation();
 // END: calling local storage
-
 
 
 async function fetchBreedImages(){
@@ -82,7 +76,7 @@ async function fetchBreedImages(){
     /* This while loop makes certain the system fetches three images.*/
     while (counter1 < 3){
 
-          var duplicateImage = false;
+        var duplicateImage = false;
 
         var fetchURL = "https://api.thecatapi.com/v1/images/search?&limit=1&breed_ids=" + breedSelectBox.value + ","
 
@@ -158,7 +152,6 @@ async function fetchBreedImages(){
 
             catchError(error);
         });
-
     }
     // if (!breedSelectBox.value === previousUserSearch1[0] || )
     if (breedSelectBox.value ===  previousUserSearch1[0] || breedSelectBox.value ===  previousUserSearch1[1] || breedSelectBox.value ===  previousUserSearch1[2] || breedSelectBox.value ===  previousUserSearch1[3] || breedSelectBox.value ===  previousUserSearch1[4]) {
@@ -379,7 +372,7 @@ async function fetchandDisplayRandomCatFact(){
 
     var funFact3 = document.getElementById("fun-fact-3");
 
-    animalFactsApiUrl = "https://cat-fact.herokuapp.com/facts";
+    animalFactsApiUrl = "https://cat-fact.herokuapp.com/facts/";
 
     await fetch(animalFactsApiUrl, {
 
@@ -390,7 +383,7 @@ async function fetchandDisplayRandomCatFact(){
         var data = await checkForBadFetch(response);
 
         if(data !== null){
-
+            console.log(data)
             var randomNumber = Math.floor(Math.random() * data.length)
             funFact3.textContent = data[randomNumber].text;
         }
@@ -712,9 +705,6 @@ async function fetchBreedClickedFacts(catName){
 
             for(var counter = 0; counter < catFacts.length; counter++){
        
-            //for(var counter = 0; counter < 13; counter++){
-                
-
                 var propertyValue = catFacts[counter][1];
 
                 var propertyValueWords = setPropertyValueWords(propertyValue);
@@ -787,16 +777,15 @@ async function fetchBreedClickedFacts(catName){
                 }
             }
 
+
         }).catch(function(error){
 
             catchError(error, 1);
-
 
         });
     
     document.getElementById("weight-span").textContent = minimumWeight + " - " + maximumWeight + " pounds";
     document.getElementById("life-expectancy-span").textContent = minimumLifeExpectancy + " - " + maximumLifeExpectancy + " years";
-
 
     var intelligenceRanking = document.getElementById("intelligence");
     if(hasIntelligenceStatistic === false){
@@ -823,7 +812,6 @@ async function fetchBreedClickedFacts(catName){
 
         var speakerBtn = document.getElementById("animal-sound")
         speakerBtn.addEventListener("click", emitSound);
-
 
 
 
