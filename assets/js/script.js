@@ -4,6 +4,8 @@ var cardOne = document.getElementById("card-1-content");
 var cardTwo = document.getElementById("card-2-content");
 var cardThree = document.getElementById("card-3-content");
 
+localStorage.clear();
+
 //cards container and default hide
 var cardsContainer = document.querySelector('#cards-container-outer');
 cardsContainer.style.display = 'none';
@@ -17,9 +19,15 @@ var errorModalCloseButton = document.getElementById("error-modal-close-button");
 
 errorModalCloseButton.addEventListener("click", closeErrorModal);
 
-fetchButton.addEventListener("click", fetchBreedImages);
-fetchButton.addEventListener("click", fetchBreedFacts);
-fetchButton.addEventListener("click", fetchandDisplayRandomCatFact);
+fetchButton.addEventListener("click", fetchCatData);
+
+
+async function fetchCatData(){
+
+    await fetchBreedImages();
+    await fetchBreedFacts();
+    await fetchandDisplayRandomCatFact();
+}
 
 cardOne.addEventListener("click", flipCard);
 cardTwo.addEventListener("click", flipCard);
@@ -33,14 +41,14 @@ var previousUserSearch2 = JSON.parse(localStorage.getItem("previousUserSearch2")
 
 // console.log(document.getElementById("breed-select").children[1].value);
 function initiation() {
-    console.log(previousUserSearch1, previousUserSearch2);
+    //console.log(previousUserSearch1, previousUserSearch2);
     if (!previousUserSearch1) {
         previousUserSearch1 = [];
         previousUserSearch2 = [];
         localStorage.setItem("previousUserSearch1",  JSON.stringify(previousUserSearch1));
         localStorage.setItem("previousUserSearch2",  JSON.stringify(previousUserSearch2));
     }
-    console.log(previousUserSearch2.length);
+    //console.log(previousUserSearch2.length);
     displayPreviousSearches();
 }
 
@@ -154,7 +162,8 @@ async function fetchBreedImages(){
         return;
     }
     else {
-        previousUserSearch1.unshift(breedSelectBox.value);
+        console.log("adding now!!")
+        await previousUserSearch1.unshift(breedSelectBox.value);
         localStorage.setItem("previousUserSearch1", JSON.stringify(previousUserSearch1));
     }
 }
@@ -179,9 +188,9 @@ async function fetchBreedFacts(){
             'X-Api-Key': APIKey
             }
 
-        }).then(function(response){
+        }).then(async function(response){
 
-            var data = checkForBadFetch(response, 1);
+            var data = await checkForBadFetch(response, 1);
 
             if(data !== null){
 
@@ -190,7 +199,6 @@ async function fetchBreedFacts(){
 
         }).then(function(data){
 
-            console.log(data);
 
             var catFacts = Object.entries(data[0])
 
@@ -422,7 +430,7 @@ function catchError(error, flag = 0){
 }
 
 // If there is a bad fetch response (I defined that to mean something other than 200), the system displays the error modal.
-function checkForBadFetch(response, flag = 0){
+async function checkForBadFetch(response, flag = 0){
 
     if(response.status !== 200){
 
@@ -516,7 +524,7 @@ function displayPreviousSearches() {
         appendChildrenElements(searchHistoryLists, x);
     }
     
-    console.log(searchHistory.children.length);
+    //console.log(searchHistory.children.length);
     if (searchHistory.children.length >= 10) {
         for (y = 4; y >= 0; y--) {
             searchHistory.children[y].remove();
@@ -526,6 +534,7 @@ function displayPreviousSearches() {
 
 function appendChildrenElements(searchHistoryLists, x) {
 
+    console.log("assign Previous Searches: Search 1: " + previousUserSearch1.length + ","  + "Search 2: " + previousUserSearch2.length);
     searchHistoryLists.setAttribute("value", previousUserSearch1[x]);
     // add css styling here.
     searchHistoryLists.setAttribute("class", "custom-search-history-button button my-1"); 
@@ -533,14 +542,14 @@ function appendChildrenElements(searchHistoryLists, x) {
     searchHistory.appendChild(searchHistoryLists);
 }
 
-function assignPreviousSearches(event) {
-    console.log(previousUserSearch1[0], previousUserSearch2[0]);
+async function assignPreviousSearches(event) {
+    
     var catName = event.target.textContent;
     var catNameValue = event.target.getAttribute("value");
 
-    fetchBreedClickedImages(catNameValue, catName);
-    fetchBreedClickedFacts(catName);
-    fetchandDisplayRandomCatFact();
+    await fetchBreedClickedImages(catNameValue, catName);
+    await fetchBreedClickedFacts(catName);
+    await fetchandDisplayRandomCatFact();
 }
 
 // this function is the same as the ones above, the only difference is that
@@ -575,7 +584,7 @@ async function fetchBreedClickedImages(catNameValue, catName){
 
         await fetch(fetchURL).then(async function(response){
 
-            var data = checkForBadFetch(response);
+            var data = await checkForBadFetch(response);
 
             if(data !== null){
     
@@ -678,9 +687,9 @@ async function fetchBreedClickedFacts(catName){
             'X-Api-Key': APIKey
             }
 
-        }).then(function(response){
+        }).then(async function(response){
 
-            var data = checkForBadFetch(response, 1);
+            var data = await checkForBadFetch(response, 1);
 
             if(data !== null){
 
@@ -688,8 +697,6 @@ async function fetchBreedClickedFacts(catName){
             }
 
         }).then(function(data){
-
-            console.log(data);
 
             var catFacts = Object.entries(data[0])
 
@@ -803,7 +810,7 @@ async function fetchBreedClickedFacts(catName){
             animalsound.load();
             animalsound.play();
 
-            console.log('test sound -> ', animalsound);
+           // console.log('test sound -> ', animalsound);
         }
 
         var speakerBtn = document.getElementById("animal-sound")
