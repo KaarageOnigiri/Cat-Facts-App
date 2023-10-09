@@ -1,24 +1,3 @@
-// BEGIN: calling local storage
-var previousUserSearch = localStorage.getItem("previousUserSearch");
-
-var imageURLs = [];
-
-// console.log(document.getElementById("breed-select").children[1].value);
-function initiation() {
-    console.log(previousUserSearch);
-    if (!previousUserSearch) {
-        previousUserSearch = "abys";
-        localStorage.setItem("previousUserSearch", previousUserSearch);
-    }
-    
-    // insert userinput here
-    fetchPreviousBreedImages();
-    fetchPreviousBreedFacts();
-}
-
-initiation();
-// END: calling local storage
-
 var fetchButton = document.getElementById("fetch-breed");
 var breedSelectBox = document.getElementById("breed-select");
 var cardOne = document.getElementById("card-1-content");
@@ -38,13 +17,46 @@ var errorModalCloseButton = document.getElementById("error-modal-close-button");
 
 errorModalCloseButton.addEventListener("click", closeErrorModal);
 
-fetchButton.addEventListener("click", fetchBreedImages);
-fetchButton.addEventListener("click", fetchBreedFacts);
-fetchButton.addEventListener("click", fetchandDisplayRandomCatFact);
+
+fetchButton.addEventListener("click", fetchCatData);
+
+async function fetchCatData(){
+
+    await fetchBreedImages();
+    await fetchBreedFacts();
+    await fetchandDisplayRandomCatFact();
+}
+
 
 cardOne.addEventListener("click", flipCard);
 cardTwo.addEventListener("click", flipCard);
 cardThree.addEventListener("click", flipCard);
+
+
+
+var searchHistory = document.getElementById("search-history");
+
+// BEGIN: calling local storage
+var previousUserSearch1 = JSON.parse(localStorage.getItem("previousUserSearch1"));
+var previousUserSearch2 = JSON.parse(localStorage.getItem("previousUserSearch2"));
+
+// console.log(document.getElementById("breed-select").children[1].value);
+function initiation() {
+    console.log(previousUserSearch1, previousUserSearch2);
+    if (!previousUserSearch1) {
+        previousUserSearch1 = [];
+        previousUserSearch2 = [];
+        localStorage.setItem("previousUserSearch1",  JSON.stringify(previousUserSearch1));
+        localStorage.setItem("previousUserSearch2",  JSON.stringify(previousUserSearch2));
+    }
+    console.log(previousUserSearch2.length);
+    displayPreviousSearches();
+}
+
+initiation();
+// END: calling local storage
+
+
 
 async function fetchBreedImages(){
     
@@ -71,6 +83,7 @@ async function fetchBreedImages(){
     while (counter1 < 3){
 
           var duplicateImage = false;
+
         var fetchURL = "https://api.thecatapi.com/v1/images/search?&limit=1&breed_ids=" + breedSelectBox.value + ","
 
         // Here is the API call to retrieve an image.
@@ -145,6 +158,15 @@ async function fetchBreedImages(){
 
             catchError(error);
         });
+
+    }
+    // if (!breedSelectBox.value === previousUserSearch1[0] || )
+    if (breedSelectBox.value ===  previousUserSearch1[0] || breedSelectBox.value ===  previousUserSearch1[1] || breedSelectBox.value ===  previousUserSearch1[2] || breedSelectBox.value ===  previousUserSearch1[3] || breedSelectBox.value ===  previousUserSearch1[4]) {
+        return;
+    }
+    else {
+        previousUserSearch1.unshift(breedSelectBox.value);
+        localStorage.setItem("previousUserSearch1", JSON.stringify(previousUserSearch1));
     }
 }
 
@@ -284,6 +306,15 @@ async function fetchBreedFacts(){
 
         intelligenceRanking.classList.remove("is-hidden");
         intelligenceRanking.classList.add("is-block");
+    }
+
+    if (doctoredSelectedBreed ===  previousUserSearch2[0] || doctoredSelectedBreed ===  previousUserSearch2[1] || doctoredSelectedBreed ===  previousUserSearch2[2] || doctoredSelectedBreed ===  previousUserSearch2[3] || doctoredSelectedBreed ===  previousUserSearch2[4]) {
+        return;
+    }
+    else {
+        previousUserSearch2.unshift(doctoredSelectedBreed);
+        localStorage.setItem("previousUserSearch2", JSON.stringify(previousUserSearch2));
+        displayPreviousSearches();
     }
 }
 
@@ -432,85 +463,240 @@ function checkForBadFetch(response, flag = 0){
 
 // END: random cat facts section
 
-// BEGIN: display image from previous search (need to change the abys to user previous input)
-async function fetchPreviousBreedImages(){
+// this function displayed the previous 5 cats that user selected
+function displayPreviousSearches() {
+    if (previousUserSearch2.length < 6) {
+        for (i = 0; i < previousUserSearch2.length; i++) {
+            
+            var searchHistoryLists = document.createElement("li");
 
-    // console.log(previousUserSearch);
+            if (previousUserSearch2[i].split("+")[1] === undefined) {
+                searchHistoryLists.textContent = previousUserSearch2[i].split("+")[0];
+    
+            }
+            else {
+                searchHistoryLists.textContent = previousUserSearch2[i].split("+")[0] + " " + previousUserSearch2[i].split("+")[1];
+            }
+            appendChildrenElements(searchHistoryLists, i);
 
-    for (var counter = 0; counter < 3; counter++){
-        var fetchURL = "https://api.thecatapi.com/v1/images/search?breed_ids=" + previousUserSearch;
+        }
+        
+        if (previousUserSearch2.length === 2) {
+            if (searchHistory.children.length === 2) {
+                return;
+            }
+            searchHistory.children[2].remove();
+        }
+        if (previousUserSearch2.length === 3) {
+            if (searchHistory.children.length === 3) {
+                return;
+            }
+            searchHistory.children[4].remove();
+            searchHistory.children[3].remove();
+        }
+        if (previousUserSearch2.length === 4) {
+            if (searchHistory.children.length === 4) {
+                return;
+            }
+            searchHistory.children[6].remove();
+            searchHistory.children[5].remove();
+            searchHistory.children[4].remove();
+        }
+        if (previousUserSearch2.length === 5) {
+            if (searchHistory.children.length === 5) {
+                return;
+            }
+            searchHistory.children[8].remove();
+            searchHistory.children[7].remove();
+            searchHistory.children[6].remove();
+            searchHistory.children[5].remove();
+        }
+        return;
+    }
+
+    for (x = 0; x < 5 && x < previousUserSearch2.length; x++) {
+        var searchHistoryLists = document.createElement("li");
+
+        if (previousUserSearch2[x].split("+")[1] === undefined) {
+            searchHistoryLists.textContent = previousUserSearch2[x].split("+")[0];
+
+        }
+        else {
+            searchHistoryLists.textContent = previousUserSearch2[x].split("+")[0] + " " + previousUserSearch2[x].split("+")[1];
+        } 
+        appendChildrenElements(searchHistoryLists, x);
+    }
+    
+    console.log(searchHistory.children.length);
+    if (searchHistory.children.length >= 10) {
+        for (y = 4; y >= 0; y--) {
+            searchHistory.children[y].remove();
+        }
+    }
+}
+
+function appendChildrenElements(searchHistoryLists, x) {
+
+    searchHistoryLists.setAttribute("value", previousUserSearch1[x]);
+    // add css styling here.
+    searchHistoryLists.setAttribute("class", "custom-search-history-button button my-1"); 
+    searchHistoryLists.addEventListener("click", assignPreviousSearches);
+    searchHistory.appendChild(searchHistoryLists);
+}
+
+function assignPreviousSearches(event) {
+    console.log(previousUserSearch1[0], previousUserSearch2[0]);
+    var catName = event.target.textContent;
+    var catNameValue = event.target.getAttribute("value");
+
+    fetchBreedClickedImages(catNameValue, catName);
+    fetchBreedClickedFacts(catName);
+    fetchandDisplayRandomCatFact();
+}
+
+// this function is the same as the ones above, the only difference is that
+// I changed the bring in the clicked value and replace the one searched value
+async function fetchBreedClickedImages(catNameValue, catName){
+    
+    //show cards container and hide banner
+    var heroContainer = document.querySelector('#cat-hero');
+    heroContainer.style.display = 'none';
+    cardsContainer.style.display = 'block';
+
+    var imageURLs = [];
+
+    var fetchAttempts = 0;
+
+    breedTitle.classList.remove("is-hidden");
+    breedTitle.classList.remove("is-block");
+    
+    var breedDescription = breedDescriptions.find(breed => breed.name === catName);
+
+    document.getElementById("cat-breed-description").textContent = breedDescription.description;
+    breedTitle.textContent = "Breed: " + breedDescription.name;
+
+    var counter1 = 0;
+
+    while (counter1 < 3){
+        /* Unfortunately, pictures Hb2N6tYTJ.jpg and uvt2Psd9O.jpg are the same pictures but have two different IDs.  This is causing duplicate pictures
+        because I have no way of filtering out one of the above, since the IDs are the same!!*/
+
+        var duplicateImage = false;
+        var fetchURL = "https://api.thecatapi.com/v1/images/search?&limit=1&breed_ids=" + catNameValue + ","
 
         await fetch(fetchURL).then(async function(response){
 
-            return response.json();
+            var data = checkForBadFetch(response);
+
+            if(data !== null){
+    
+                return data;
+            }
 
         }).then(function(data){
-
-            localStorage.setItem("previousUserSearch", previousUserSearch);
 
             var imageURL = data[0].url;
 
             imageURLs.push(imageURL);
 
-            for(var counter2 = 1; counter2 < imageURLs.length; counter2++){
+            if(counter1 > 0){
+
+                var counter2 = 0
+
+                /* The purpose of this for loop is to eliminate duplicate images. */
+                for(counter2 = 0; counter2 < counter1; counter2++){
                 
-                if(imageURLs[counter2] === imageURLs[counter2 - 1]){
-                    
-                    counter--;
-                    imageURLs.splice(counter2, 1)
-                    break;
+                    /* Unfortunately, pictures Hb2N6tYTJ.jpg, uvt2Psd9O.jpg, MJWtDz75E.jpg, and g1j3wRjgx.jpg (a picture of an orange tabby cat laying on a bed or couch, 
+                    looking rather sad and looking up, toward the camera) are the same actual images but have four different IDs.  As such, the normal method of comparing the IDs to 
+                    elminiate duplicates doesn't work for those four images, so I filtered them out manually. Additionally, two of the aforementioned images are returned when searching for
+                    Abyssinian cats, and the other two are returned when searching for Agean cats. I have no idea why this is, other than it being a fault of the Cat API.*/
+                    if(imageURLs[counter1] === imageURLs[counter2] || imageURLs[0] === "assets/images/black-screen.JPG" || 
+                    (imageURLs[counter1] === "https://cdn2.thecatapi.com/images/Hb2N6tYTJ.jpg" && imageURLs[counter2] === "https://cdn2.thecatapi.com/images/uvt2Psd9O.jpg") || 
+                    (imageURLs[counter2] === "https://cdn2.thecatapi.com/images/Hb2N6tYTJ.jpg" && imageURLs[counter1] === "https://cdn2.thecatapi.com/images/uvt2Psd9O.jpg") || 
+                    (imageURLs[counter1] === "https://cdn2.thecatapi.com/images/MJWtDz75E.jpg" && imageURLs[counter2] === "https://cdn2.thecatapi.com/images/g1j3wRjgx.jpg") || 
+                    (imageURLs[counter2] === "https://cdn2.thecatapi.com/images/MJWtDz75E.jpg" && imageURLs[counter1] === "https://cdn2.thecatapi.com/images/g1j3wRjgx.jpg")) {
+                        
+                        imageURLs.splice(imageURLs.length - 1, 1);
+                        duplicateImage = true;
+                        fetchAttempts++;
+
+                        /* There are a couple of cat breeds that only have one image available without using the API key, so for those, I decided
+                        to put a solid black image on each other image card in place of each of the other images. */
+                        if(fetchAttempts === 15){
+
+                            document.getElementById("img-" + (counter1 + 1)).src = "assets/images/black-screen.JPG"
+                            imageURLs.push("assets/images/black-screen.JPG")
+                            fetchAttempts = 0;
+                            counter1++;
+
+                        }
+
+                        break;
+                    }
                 }
+
+                if(counter2 === counter1){
+
+                    document.getElementById("img-" + (counter1 + 1)).src = imageURL;   
+                }
+
+            } else {
+
+                document.getElementById("img-" + (counter1 + 1)).src = imageURL;
             }
 
-            document.getElementById("img-" + (counter + 1)).src = imageURL;
+            if(duplicateImage === false){
+                counter1++;
+            }
+
+        }).catch(function(error){
+
+            catchError(error);
+            errorFound = true;
+            
         });
+
+        if(errorFound === true){
+            break;
+        }
+    }
+    // if (!breedSelectBox.value === previousUserSearch1[0] || )
+    if (breedSelectBox.value ===  previousUserSearch1[0] || breedSelectBox.value ===  previousUserSearch1[1] || breedSelectBox.value ===  previousUserSearch1[2] || breedSelectBox.value ===  previousUserSearch1[3] || breedSelectBox.value ===  previousUserSearch1[4]) {
+        return;
+    }
+    else {
+        previousUserSearch1.unshift(breedSelectBox.value);
+        localStorage.setItem("previousUserSearch1", JSON.stringify(previousUserSearch1));
     }
 }
-// END: display image from previous search 
 
-// BEGIN: same as the function above (adding this just in case I want to modify something within it)
-async function fetchPreviousBreedFacts(){
+async function fetchBreedClickedFacts(catName){
 
+    var hasIntelligenceStatistic = false;
     var maximumLifeExpectancy = "";
     var minimumLifeExpectancy = "";
     var maximumWeight = "";
     var minimumWeight = "";
 
+    var selectedBreed = breedSelectBox.options[breedSelectBox.selectedIndex].text;
+
+   var doctoredSelectedBreed = selectedBreed.replace(new RegExp(" ", 'g'), '+');
+
     var APIKey = "+v2rPqjZgnuAusp2fgCqLQ==LL2wNNiBCErIm3Fj";
-    
-    // test section, can be changed to match Gabriel's code
-    var previousUserSearchData;
-    if (previousUserSearch === "abys") {
-        previousUserSearchData = "abyssinian";
-    }
-    if (previousUserSearch === "aege") {
-        previousUserSearchData = "aegean";
-    }
-    if (previousUserSearch === "abob") {
-        previousUserSearchData = "bobtail";
-    }
-    if (previousUserSearch === "acur") {
-        previousUserSearchData = "curl";
-    }
-    if (previousUserSearch === "asho") {
-        previousUserSearchData = "shorthair";
-    }
-    if (previousUserSearch === "awir") {
-        previousUserSearchData = "wirehair";
-    }
 
-    // console.log(previousUserSearchData);
-
-
-    // change abyssnian to variable
-        await fetch('https://api.api-ninjas.com/v1/cats?name=' + previousUserSearchData, {
+        await fetch('https://api.api-ninjas.com/v1/cats?name=' + catName, {
             headers: {
             'X-Api-Key': APIKey
             }
 
         }).then(function(response){
 
-            return response.json();
+            var data = checkForBadFetch(response, 1);
+
+            if(data !== null){
+
+                return data;
+            }
 
         }).then(function(data){
 
@@ -524,8 +710,11 @@ async function fetchPreviousBreedFacts(){
 
             var randomFact = "";
 
-            for(var counter = 0; counter < 13; counter++){
+            for(var counter = 0; counter < catFacts.length; counter++){
+       
+            //for(var counter = 0; counter < 13; counter++){
                 
+
                 var propertyValue = catFacts[counter][1];
 
                 var propertyValueWords = setPropertyValueWords(propertyValue);
@@ -547,7 +736,9 @@ async function fetchPreviousBreedFacts(){
 
                 if(catFacts[counter][0] === "intelligence"){
 
-                    document.getElementById("intelligence-span").textContent = propertyValueWords
+                    document.getElementById("intelligence-span").textContent = propertyValueWords;
+                    hasIntelligenceStatistic = true;
+
                 }
 
                 if(catFacts[counter][0] === "length"){
@@ -595,29 +786,56 @@ async function fetchPreviousBreedFacts(){
                     document.getElementById("shedding-span").textContent = propertyValueWords 
                 }
             }
+
+        }).catch(function(error){
+
+            catchError(error, 1);
+
+
         });
     
     document.getElementById("weight-span").textContent = minimumWeight + " - " + maximumWeight + " pounds";
     document.getElementById("life-expectancy-span").textContent = minimumLifeExpectancy + " - " + maximumLifeExpectancy + " years";
-}
-// END: same as the function above
+
+
+    var intelligenceRanking = document.getElementById("intelligence");
+    if(hasIntelligenceStatistic === false){
+
+        intelligenceRanking.classList.add("is-hidden");
+        intelligenceRanking.classList.remove("is-block");
+
+    } else {
 
 //Cat sound button 
- 
-const emitSound = () => {
-    var Catfight = "assets/cat-sounds/Cat-fight.mp3";
-    var Catgrowl = "assets/cat-sounds/Cat-growl.mp3";
-    var Catpurr = "assets/cat-sounds/Cat-purr.mp3";
-    var kittenmeow = "assets/cat-sounds/kitten-meow.mp3";
+        
+        const emitSound = () => {
+            var Catfight = "assets/cat-sounds/Cat-fight.mp3";
+            var Catgrowl = "assets/cat-sounds/Cat-growl.mp3";
+            var Catpurr = "assets/cat-sounds/Cat-purr.mp3";
+            var kittenmeow = "assets/cat-sounds/kitten-meow.mp3";
 
-    const animalsound = new Audio(kittenmeow);
-    animalsound.load();
-    animalsound.play();
+            const animalsound = new Audio(kittenmeow);
+            animalsound.load();
+            animalsound.play();
 
-    console.log('test sound -> ', animalsound);
+            console.log('test sound -> ', animalsound);
+        }
+
+        var speakerBtn = document.getElementById("animal-sound")
+        speakerBtn.addEventListener("click", emitSound);
+
+
+
+
+        intelligenceRanking.classList.remove("is-hidden");
+        intelligenceRanking.classList.add("is-block");
+    }
+    if (doctoredSelectedBreed ===  previousUserSearch2[0] || doctoredSelectedBreed ===  previousUserSearch2[1] || doctoredSelectedBreed ===  previousUserSearch2[2] || doctoredSelectedBreed ===  previousUserSearch2[3] || doctoredSelectedBreed ===  previousUserSearch2[4]) {
+        return;
+    }
+    else {
+        previousUserSearch2.unshift(doctoredSelectedBreed);
+        localStorage.setItem("previousUserSearch2", JSON.stringify(previousUserSearch2));
+        displayPreviousSearches();
+    }
 }
-
-var speakerBtn = document.getElementById("animal-sound")
-speakerBtn.addEventListener("click", emitSound);
-
-
