@@ -359,19 +359,19 @@ function setPropertyValueWords(value){
     switch(value){
 
         case 1: 
-            return "very low";
+            return "Very LOW";
         
         case 2: 
-            return "low";
+            return "LOW";
 
         case 3: 
-            return "medium";
+            return "MEDIUM";
 
         case 4: 
-            return "high";
+            return "HIGH";
 
         case 5: 
-            return "very high";
+            return "Very HIGH";
     }
 }
 
