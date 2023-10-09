@@ -44,7 +44,11 @@ h2 {
 /* .custom-background-header {
     background: linear-gradient(135deg, rgb(140, 214, 132), rgb(86, 153, 255));
 } */
-
+/* TESTING RESPONSIVENESS */
+#cards-container-inner {
+    display: flex;
+    flex-flow: wrap;
+}
 .hero-body .container p {
     color: white;
 }
