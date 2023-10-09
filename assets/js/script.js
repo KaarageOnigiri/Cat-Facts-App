@@ -17,9 +17,14 @@ var errorModalCloseButton = document.getElementById("error-modal-close-button");
 
 errorModalCloseButton.addEventListener("click", closeErrorModal);
 
-fetchButton.addEventListener("click", fetchBreedImages);
-fetchButton.addEventListener("click", fetchBreedFacts);
-fetchButton.addEventListener("click", fetchandDisplayRandomCatFact);
+fetchButton.addEventListener("click", fetchCatData);
+
+async function fetchCatData(){
+
+    await fetchBreedImages();
+    await fetchBreedFacts();
+    await fetchandDisplayRandomCatFact();
+}
 
 cardOne.addEventListener("click", flipCard);
 cardTwo.addEventListener("click", flipCard);
@@ -368,7 +373,7 @@ async function fetchandDisplayRandomCatFact(){
 
     var funFact3 = document.getElementById("fun-fact-3");
 
-    animalFactsApiUrl = "https://cat-fact.herokuapp.com/facts";
+    animalFactsApiUrl = "https://cat-fact.herokuapp.com/facts/random";
 
     await fetch(animalFactsApiUrl, {
 
