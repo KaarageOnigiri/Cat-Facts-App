@@ -37,14 +37,16 @@ var previousUserSearch1 = JSON.parse(localStorage.getItem("previousUserSearch1")
 var previousUserSearch2 = JSON.parse(localStorage.getItem("previousUserSearch2"));
 
 function initiation() {
+    // show local storage
     console.log(previousUserSearch1, previousUserSearch2);
+    // this function will run if the user has no localStorage called "previousUserSearch1"
     if (!previousUserSearch1) {
         previousUserSearch1 = [];
         previousUserSearch2 = [];
         localStorage.setItem("previousUserSearch1",  JSON.stringify(previousUserSearch1));
         localStorage.setItem("previousUserSearch2",  JSON.stringify(previousUserSearch2));
     }
-    console.log(previousUserSearch2.length);
+
     displayPreviousSearches();
 }
 
@@ -153,10 +155,12 @@ async function fetchBreedImages(){
             catchError(error);
         });
     }
-    // if (!breedSelectBox.value === previousUserSearch1[0] || )
+
+    // this is to make sure that no two cats of the same breed show up on "last five previous cat breed"
     if (breedSelectBox.value ===  previousUserSearch1[0] || breedSelectBox.value ===  previousUserSearch1[1] || breedSelectBox.value ===  previousUserSearch1[2] || breedSelectBox.value ===  previousUserSearch1[3] || breedSelectBox.value ===  previousUserSearch1[4]) {
         return;
     }
+    // if it's a new cat, it'll be displayed and saved into the localStorage
     else {
         previousUserSearch1.unshift(breedSelectBox.value);
         localStorage.setItem("previousUserSearch1", JSON.stringify(previousUserSearch1));
@@ -367,7 +371,7 @@ function setPropertyValueWords(value){
             return "Very HIGH";
     }
 }
-
+// this function will display random cat fact in card 3
 async function fetchandDisplayRandomCatFact(){
 
     var funFact3 = document.getElementById("fun-fact-3");
@@ -383,9 +387,16 @@ async function fetchandDisplayRandomCatFact(){
         var data = await checkForBadFetch(response);
 
         if(data !== null){
-            console.log(data)
+  
             var randomNumber = Math.floor(Math.random() * data.length)
             funFact3.textContent = data[randomNumber].text;
+        }
+        // this is for just in case if the heroku API is not working. It had happened before.
+        if (response.status !== 200) {
+            
+            var randomNumber = Math.floor(Math.random() * randomCatFacts.length);
+            funFact3.textContent = randomCatFacts[randomNumber];
+            return;
         }
 
     }).catch(function(error){
@@ -527,7 +538,7 @@ function displayPreviousSearches() {
         }
     }
 }
-
+// added buttons for to show previously searched cats
 function appendChildrenElements(searchHistoryLists, x) {
 
     searchHistoryLists.setAttribute("value", previousUserSearch1[x]);
@@ -536,9 +547,9 @@ function appendChildrenElements(searchHistoryLists, x) {
     searchHistoryLists.addEventListener("click", assignPreviousSearches);
     searchHistory.appendChild(searchHistoryLists);
 }
-
+// search the clicked cat's name when you click on the buttons of the cat's name
 function assignPreviousSearches(event) {
-    console.log(previousUserSearch1[0], previousUserSearch2[0]);
+
     var catName = event.target.textContent;
     var catNameValue = event.target.getAttribute("value");
 
@@ -653,7 +664,7 @@ async function fetchBreedClickedImages(catNameValue, catName){
             break;
         }
     }
-    // if (!breedSelectBox.value === previousUserSearch1[0] || )
+    // this is to make sure that no two cats of the same breed get displayed twice, and only save it in local storage if it doesn't
     if (breedSelectBox.value ===  previousUserSearch1[0] || breedSelectBox.value ===  previousUserSearch1[1] || breedSelectBox.value ===  previousUserSearch1[2] || breedSelectBox.value ===  previousUserSearch1[3] || breedSelectBox.value ===  previousUserSearch1[4]) {
         return;
     }
@@ -663,6 +674,7 @@ async function fetchBreedClickedImages(catNameValue, catName){
     }
 }
 
+// same function as fetchBreedFacts, but in this one I bring the clicked variables inside and replace the value in the search bar
 async function fetchBreedClickedFacts(catName){
 
     var hasIntelligenceStatistic = false;
@@ -818,6 +830,7 @@ async function fetchBreedClickedFacts(catName){
         intelligenceRanking.classList.remove("is-hidden");
         intelligenceRanking.classList.add("is-block");
     }
+        // this is to make sure that no two cats of the same breed get displayed twice, and only save it if it doesn't
     if (doctoredSelectedBreed ===  previousUserSearch2[0] || doctoredSelectedBreed ===  previousUserSearch2[1] || doctoredSelectedBreed ===  previousUserSearch2[2] || doctoredSelectedBreed ===  previousUserSearch2[3] || doctoredSelectedBreed ===  previousUserSearch2[4]) {
         return;
     }
