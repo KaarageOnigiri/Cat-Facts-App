@@ -10,6 +10,13 @@ This application uses HTML, CSS and JavaScript to create a functioning webpage t
 
 For this application, we called [The Cat API](https://thecatapi.com/) to retrieve cat images, the [Cats API](https://api-ninjas.com/api/cats) to retrieve the facts and statistics for specific breeds of cats, and the [Cat Facts API](https://cat-fact.herokuapp.com/#/) to retrieve the random overall cat fact that is displayed on the back of the third card when a breed is chosen.  Please feel free to view the APIs by clicking on their respective links.
 
+## Team Involvement and Breakdown of Tasks
+
+Gabriel - JavaScript functionality for APIs and selectors, Assets, Research
+Villy - CSS, Bulma, JavaScript functionality for API, Local Storage, Research
+Zack - CSS, Bulma, Sound functionality, Research, Assets, and Support
+Dusty - Team lead, CSS, Bulma, Research, Assets, and Support
+
 ## Table of Contents (Optional)
 
 This README isn't that long, so N/A.
@@ -20,9 +27,11 @@ N/A
 
 ## Usage
 
-To use the application, please go to the following link: [https://KaarageOnigiri.github.io/Random-Animal-Facts](https://KaarageOnigiri.github.io/Random-Animal-Facts).  
+To use the application, please go to the following link: [https://KaarageOnigiri.github.io/Cat-Images-and-Facts-Retriever](https://KaarageOnigiri.github.io/Cat-Images-and-Facts-Retriever).  
 
 To start, choose a breed of cat from the dropdown window.  Then, click the cat icon next to the dropdown window.  The application will display up to three images of your chosen cat breed.  You can also click on the card on the right to display facts about the chosen cat breed.  Clicking on the card in the middle will display cat statistics, such as playfulness and amount of required grooming, ranging from very low to very high.  The application will also store and display up to five of your previously chosen cat breeds, and this data will persist when closing and reopening the application.  Clicking on one of those breeds will pull up its information and images again.  If an API call fails, the application will inform the user of this via a modal dialog box.
+
+Here is a screenshot of the application: ![A Sreenshot of the Cat Images and Facts Retriever](assets/images/webpage-screenshot.JPG)
 
 ## Credits
 
@@ -37,6 +46,8 @@ We downloaded the cat sounds from [https://quicksounds.com/library/sounds/cat] (
 We downloaded the cat icon from [https://www.flaticon.com/free-icons/cat] (https://www.flaticon.com/free-icons/cat)
 
 We downloaded the sound icon from [https://icons8.com/icons/set/sound](https://icons8.com/icons/set/sound)
+
+We downloaded cat banner image from [https://unsplash.com/s/photos/cat](https://unsplash.com/s/photos/cat)
 
 I used the Xpert Learning Assistant AI chatbot to help out with writing the code.
 
