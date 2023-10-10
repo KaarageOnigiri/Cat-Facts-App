@@ -13,8 +13,11 @@ For this application, we called [The Cat API](https://thecatapi.com/) to retriev
 ## Team Involvement and Breakdown of Tasks
 
 Gabriel - JavaScript functionality for APIs and selectors, Assets, Research
+
 Villy - CSS, Bulma, JavaScript functionality for API, Local Storage, Research
+
 Zack - CSS, Bulma, Sound functionality, Research, Assets, and Support
+
 Dusty - Team lead, CSS, Bulma, Research, Assets, and Support
 
 ## Table of Contents (Optional)
