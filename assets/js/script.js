@@ -37,8 +37,6 @@ var previousUserSearch1 = JSON.parse(localStorage.getItem("previousUserSearch1")
 var previousUserSearch2 = JSON.parse(localStorage.getItem("previousUserSearch2"));
 
 function initiation() {
-    // show local storage
-    console.log(previousUserSearch1, previousUserSearch2);
     // this function will run if the user has no localStorage called "previousUserSearch1"
     if (!previousUserSearch1) {
         previousUserSearch1 = [];
@@ -489,31 +487,31 @@ function displayPreviousSearches() {
             if (searchHistory.children.length === 2) {
                 return;
             }
-            searchHistory.children[2].remove();
+            searchHistory.children[0].remove();
         }
         if (previousUserSearch2.length === 3) {
             if (searchHistory.children.length === 3) {
                 return;
             }
-            searchHistory.children[4].remove();
-            searchHistory.children[3].remove();
+            searchHistory.children[0].remove();
+            searchHistory.children[0].remove();
         }
         if (previousUserSearch2.length === 4) {
             if (searchHistory.children.length === 4) {
                 return;
             }
-            searchHistory.children[6].remove();
-            searchHistory.children[5].remove();
-            searchHistory.children[4].remove();
+            searchHistory.children[0].remove();
+            searchHistory.children[0].remove();
+            searchHistory.children[0].remove();
         }
         if (previousUserSearch2.length === 5) {
             if (searchHistory.children.length === 5) {
                 return;
             }
-            searchHistory.children[8].remove();
-            searchHistory.children[7].remove();
-            searchHistory.children[6].remove();
-            searchHistory.children[5].remove();
+            searchHistory.children[0].remove();
+            searchHistory.children[0].remove();
+            searchHistory.children[0].remove();
+            searchHistory.children[0].remove();
         }
         return;
     }
