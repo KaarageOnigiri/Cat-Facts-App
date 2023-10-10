@@ -1,25 +1,19 @@
 html {
     background: linear-gradient(90deg, rgb(140, 214, 132), rgb(86, 153, 255));
+    
 }
+
 h2 {
     font-family: Georgia, Times, serif;
 } 
-#card-2-back {
-    text-align: start;
-}
-#card-2-back span {
-    float: right;
-}
-#card-1-back h2, #card-2-back h2, #fact-title-3 {
-    display: block;
-    text-align: center;
-    padding: 0.5rem;
 
-    /* linear gradient helped by https://codepen.io/brucebrotherton/pen/wvqjORe */
-    background-image: linear-gradient(-45deg, transparent 10%, rgb(54, 54, 148) 10.5%, #00d1b2 90%, transparent 90.5%);
-    color: beige;
-    font-size: 1.3em;
+/* I made the cat breeds bold this way because it seemed simpler than using Bulma, since there are 
+dozens of cat breeds in the application. */
+select option{
+    
+    font-weight: bold;
 }
+
 .img-class {
     width: 100%;
     height: 100%;
@@ -149,12 +143,6 @@ h2 {
     
 }
 
-#search-history {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .custom-search-history-button {
     background-color: rgb(97, 189, 189);
     color: white;
@@ -247,6 +235,57 @@ input[type = checkbox] {
 
 }
 
+#card-2-back {
+    text-align: start;
+}
+#card-2-back span {
+    float: right;
+}
+#card-1-back h2, #card-2-back h2, #fact-title-3 {
+    display: block;
+    text-align: center;
+    padding: 0.5rem;
+
+    /* linear gradient helped by https://codepen.io/brucebrotherton/pen/wvqjORe */
+    background-image: linear-gradient(-45deg, transparent 10%, rgb(54, 54, 148) 10.5%, #00d1b2 90%, transparent 90.5%);
+    color: beige;
+    font-size: 1.3em;
+}
+
+#search-history {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media  screen and (max-width: 768px) {
+
+    footer section p{
+
+        margin-left: 0.5em;
+        margin-right: 0.5em;
+    }
+
+    #error-message{
+        width: 80vw;
+    }
+}
+
+@media  screen and (max-width: 400px) {
+
+    .picture-size{
+
+        width: 80vw;
+        height: 80vw;
+    }
+
+    .card p{
+
+        font-size: 3.2vw;
+    }
+    
+}
+
 input[type=checkbox]:checked {
     ~ .container {
         animation: lift .4s linear;
@@ -261,10 +300,6 @@ input[type=checkbox]:checked {
             transform: rotateY(180deg);
         }
     }
-}
-
-#cat-breed-description{
-    text-align: left;
 }
 
 @keyframes lift {

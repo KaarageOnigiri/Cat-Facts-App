@@ -222,11 +222,13 @@ function displayPreviousSearches() {
 
             if (previousUserSearch2[i].split("+")[1] === undefined) {
                 searchHistoryButton.textContent = previousUserSearch2[i].split("+")[0];
+                
     
             }
             else {
                 searchHistoryButton.textContent = previousUserSearch2[i].split("+")[0] + " " + previousUserSearch2[i].split("+")[1];
             }
+
             appendChildrenElements(searchHistoryButton, i);
 
         }
@@ -265,7 +267,7 @@ function displayPreviousSearches() {
     }
 
     for (x = 0; x < 5 && x < previousUserSearch2.length; x++) {
-        var searchHistoryButton = document.createElement("li");
+        var searchHistoryButton = document.createElement("button");
 
         if (previousUserSearch2[x].split("+")[1] === undefined) {
             searchHistoryButton.textContent = previousUserSearch2[x].split("+")[0];
@@ -274,6 +276,7 @@ function displayPreviousSearches() {
         else {
             searchHistoryButton.textContent = previousUserSearch2[x].split("+")[0] + " " + previousUserSearch2[x].split("+")[1];
         } 
+
         appendChildrenElements(searchHistoryButton, x);
     }
     
@@ -304,8 +307,7 @@ function assignPreviousSearches(event) {
     fetchandDisplayRandomCatFact();
 }
 
-// this function is the same as the ones above, the only difference is that
-// I changed the bring in the clicked value and replace the one searched value
+/* This function fetches the cat breed images from the cat API and displays them on the screen. */
 async function fetchBreedImages(catNameValue = "", catName = ""){
 
     if(catName === ""){
@@ -337,10 +339,9 @@ async function fetchBreedImages(catNameValue = "", catName = ""){
 
     var counter1 = 0;
 
+    // The purpose of this loop is to fetch three distinct cat images for a specific breed.
     while (counter1 < 3){
-        /* Unfortunately, pictures Hb2N6tYTJ.jpg and uvt2Psd9O.jpg are the same pictures but have two different IDs.  This is causing duplicate pictures
-        because I have no way of filtering out one of the above, since the IDs are the same!!*/
-
+    
         var duplicateImage = false;
         var fetchURL = "https://api.thecatapi.com/v1/images/search?&limit=1&breed_ids=" + catNameValue + ","
 
@@ -381,7 +382,7 @@ async function fetchBreedImages(catNameValue = "", catName = ""){
                         fetchAttempts++;
 
                         /* There are a couple of cat breeds that only have one image available without using the API key, so for those, I decided
-                        to put a solid black image on each other image card in place of each of the other images. */
+                        to put a black image with the words "This cat is sleeping." on each other image card in place of each of the missing images. */
                         if(fetchAttempts === 15){
 
                             document.getElementById("img-" + (counter1 + 1)).src = "assets/images/black-screen.JPG"
@@ -415,13 +416,11 @@ async function fetchBreedImages(catNameValue = "", catName = ""){
             errorFound = true;
             
         });
-
-        if(errorFound === true){
-            break;
-        }
     }
     // this is to make sure that no two cats of the same breed get displayed twice, and only save it in local storage if it doesn't
-    if (breedSelectBox.value ===  previousUserSearch1[0] || breedSelectBox.value ===  previousUserSearch1[1] || breedSelectBox.value ===  previousUserSearch1[2] || breedSelectBox.value ===  previousUserSearch1[3] || breedSelectBox.value ===  previousUserSearch1[4]) {
+    if (breedSelectBox.value ===  previousUserSearch1[0] || breedSelectBox.value ===  previousUserSearch1[1] || 
+        breedSelectBox.value ===  previousUserSearch1[2] || breedSelectBox.value ===  previousUserSearch1[3] || 
+        breedSelectBox.value ===  previousUserSearch1[4]) {
         return;
     }
     else {
@@ -430,7 +429,7 @@ async function fetchBreedImages(catNameValue = "", catName = ""){
     }
 }
 
-// same function as fetchBreedFacts, but in this one I bring the clicked variables inside and replace the value in the search bar
+//This function gets the facts about the various cat breeds from the Cats API.
 async function fetchBreedFacts(catName = ""){
 
     var hasIntelligenceStatistic = false;
@@ -476,6 +475,7 @@ async function fetchBreedFacts(catName = ""){
 
             var randomFact = "";
 
+            // This for loop populates the cards with most of the cat facts fetched from the Cats API.
             for(var counter = 0; counter < catFacts.length; counter++){
        
                 var propertyValue = catFacts[counter][1];
@@ -589,7 +589,9 @@ async function fetchBreedFacts(catName = ""){
         intelligenceRanking.classList.add("is-block");
     }
         // this is to make sure that no two cats of the same breed get displayed twice, and only save it if it doesn't
-    if (doctoredSelectedBreed ===  previousUserSearch2[0] || doctoredSelectedBreed ===  previousUserSearch2[1] || doctoredSelectedBreed ===  previousUserSearch2[2] || doctoredSelectedBreed ===  previousUserSearch2[3] || doctoredSelectedBreed ===  previousUserSearch2[4]) {
+    if (doctoredSelectedBreed ===  previousUserSearch2[0] || doctoredSelectedBreed ===  previousUserSearch2[1] || 
+        doctoredSelectedBreed ===  previousUserSearch2[2] || doctoredSelectedBreed ===  previousUserSearch2[3] ||
+        doctoredSelectedBreed ===  previousUserSearch2[4]) {
         return;
     }
     else {
