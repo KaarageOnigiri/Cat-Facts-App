@@ -44,7 +44,7 @@ I used the official Bulma documentation to create a modal dialog box for the pur
 
 I copied the list of breed descriptions from The Cat API: [https://api.thecatapi.com/v1/breeds](https://api.thecatapi.com/v1/breeds)
 
-We downloaded the cat sounds from [https://quicksounds.com/library/sounds/cat](https://quicksounds.com/library/sounds/cat).
+We downloaded the kitten meow sound from [https://quicksounds.com/library/sounds/cat](https://quicksounds.com/library/sounds/cat).
 
 We downloaded the cat icon from [https://www.flaticon.com/free-icons/cat](https://www.flaticon.com/free-icons/cat).
 
