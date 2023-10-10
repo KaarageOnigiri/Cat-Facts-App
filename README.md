@@ -39,13 +39,13 @@ To build this project, I, [Gabriel Morrow](https://github.com/theboss1485), work
 
 I used the official Bulma documentation to create a modal dialog box for the purpose of displaying errors.  I copied code from there and made changes as necessary: [https://bulma.io/documentation/components/modal/](https://bulma.io/documentation/components/modal/)
 
-I copied the list of breed descriptions from The Cat API: [https://api.thecatapi.com/v1/breeds](https://api.thecatapi.com/v1/breeds).
+I copied the list of breed descriptions from The Cat API: [https://api.thecatapi.com/v1/breeds](https://api.thecatapi.com/v1/breeds)
 
-We downloaded the cat sounds from [https://quicksounds.com/library/sounds/cat] (https://quicksounds.com/library/sounds/cat)
+We downloaded the cat sounds from [https://quicksounds.com/library/sounds/cat](https://quicksounds.com/library/sounds/cat).
 
-We downloaded the cat icon from [https://www.flaticon.com/free-icons/cat] (https://www.flaticon.com/free-icons/cat)
+We downloaded the cat icon from [https://www.flaticon.com/free-icons/cat](https://www.flaticon.com/free-icons/cat).
 
-We downloaded the sound icon from [https://icons8.com/icons/set/sound](https://icons8.com/icons/set/sound)
+We downloaded the sound icon from [https://icons8.com/icons/set/sound](https://icons8.com/icons/set/sound).
 
 We downloaded the cat banner image from [https://unsplash.com/s/photos/cat](https://unsplash.com/s/photos/cat)
 

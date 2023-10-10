@@ -4,6 +4,9 @@ var cardOne = document.getElementById("card-1-content");
 var cardTwo = document.getElementById("card-2-content");
 var cardThree = document.getElementById("card-3-content");
 
+var speakerBtn = document.getElementById("animal-sound")
+speakerBtn.addEventListener("click", emitSound);
+
 
 //cards container and default hide
 var cardsContainer = document.querySelector('#cards-container-outer');
@@ -109,7 +112,10 @@ function setPropertyValueWords(value){
             return "Very HIGH";
     }
 }
-// this function will display random cat fact in card 3
+
+/* this function will display a random cat fact in card 3.  We did run into an issue where the 
+Random Cat Fact API will go down every once in a while and thus the fetch requests to that API will fail.  
+This is a problem with that API, not this application.  */
 async function fetchandDisplayRandomCatFact(){
 
     var funFact3 = document.getElementById("fun-fact-3");
@@ -568,20 +574,9 @@ async function fetchBreedFacts(catName = ""){
 
     } else {
 
-//Cat sound button 
-        
-        const emitSound = () => {
-            var kittenmeow = "assets/cat-sounds/kitten-meow.mp3";
 
-            const animalsound = new Audio(kittenmeow);
-            animalsound.load();
-            animalsound.play();
 
-            console.log('test sound -> ', animalsound);
-        }
 
-        var speakerBtn = document.getElementById("animal-sound")
-        speakerBtn.addEventListener("click", emitSound);
 
 
 
@@ -599,4 +594,15 @@ async function fetchBreedFacts(catName = ""){
         localStorage.setItem("previousUserSearch2", JSON.stringify(previousUserSearch2));
         displayPreviousSearches();
     }
+}
+
+//Cat sound button 
+function emitSound(){
+    var kittenmeow = "assets/cat-sounds/kitten-meow.mp3";
+
+    const animalsound = new Audio(kittenmeow);
+    animalsound.load();
+    animalsound.play();
+
+    console.log('test sound -> ', animalsound);
 }
