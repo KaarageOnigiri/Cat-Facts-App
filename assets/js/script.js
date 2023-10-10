@@ -4,7 +4,6 @@ var cardOne = document.getElementById("card-1-content");
 var cardTwo = document.getElementById("card-2-content");
 var cardThree = document.getElementById("card-3-content");
 
-localStorage.clear();
 
 //cards container and default hide
 var cardsContainer = document.querySelector('#cards-container-outer');
@@ -19,7 +18,6 @@ var errorModalCloseButton = document.getElementById("error-modal-close-button");
 
 errorModalCloseButton.addEventListener("click", closeErrorModal);
 
-
 fetchButton.addEventListener("click", fetchCatData);
 
 async function fetchCatData(){
@@ -29,12 +27,9 @@ async function fetchCatData(){
     await fetchandDisplayRandomCatFact();
 }
 
-
 cardOne.addEventListener("click", flipCard);
 cardTwo.addEventListener("click", flipCard);
 cardThree.addEventListener("click", flipCard);
-
-
 
 var searchHistory = document.getElementById("search-history");
 
@@ -42,16 +37,15 @@ var searchHistory = document.getElementById("search-history");
 var previousUserSearch1 = JSON.parse(localStorage.getItem("previousUserSearch1"));
 var previousUserSearch2 = JSON.parse(localStorage.getItem("previousUserSearch2"));
 
-// console.log(document.getElementById("breed-select").children[1].value);
 function initiation() {
-    console.log(previousUserSearch1, previousUserSearch2);
+    // this function will run if the user has no localStorage called "previousUserSearch1"
     if (!previousUserSearch1) {
         previousUserSearch1 = [];
         previousUserSearch2 = [];
         localStorage.setItem("previousUserSearch1",  JSON.stringify(previousUserSearch1));
         localStorage.setItem("previousUserSearch2",  JSON.stringify(previousUserSearch2));
     }
-    console.log(previousUserSearch2.length);
+
     displayPreviousSearches();
 }
 
@@ -115,12 +109,12 @@ function setPropertyValueWords(value){
             return "Very HIGH";
     }
 }
-
+// this function will display random cat fact in card 3
 async function fetchandDisplayRandomCatFact(){
 
     var funFact3 = document.getElementById("fun-fact-3");
 
-    animalFactsApiUrl = "https://cat-fact.herokuapp.com/facts";
+    animalFactsApiUrl = "https://cat-fact.herokuapp.com/facts/";
 
     await fetch(animalFactsApiUrl, {
 
@@ -131,9 +125,16 @@ async function fetchandDisplayRandomCatFact(){
         var data = await checkForBadFetch(response);
 
         if(data !== null){
-
+  
             var randomNumber = Math.floor(Math.random() * data.length)
             funFact3.textContent = data[randomNumber].text;
+        }
+        // this is for just in case if the heroku API is not working. It had happened before.
+        if (response.status !== 200) {
+            
+            var randomNumber = Math.floor(Math.random() * randomCatFacts.length);
+            funFact3.textContent = randomCatFacts[randomNumber];
+            return;
         }
 
     }).catch(function(error){
@@ -234,31 +235,31 @@ function displayPreviousSearches() {
             if (searchHistory.children.length === 2) {
                 return;
             }
-            searchHistory.children[2].remove();
+            searchHistory.children[0].remove();
         }
         if (previousUserSearch2.length === 3) {
             if (searchHistory.children.length === 3) {
                 return;
             }
-            searchHistory.children[4].remove();
-            searchHistory.children[3].remove();
+            searchHistory.children[0].remove();
+            searchHistory.children[0].remove();
         }
         if (previousUserSearch2.length === 4) {
             if (searchHistory.children.length === 4) {
                 return;
             }
-            searchHistory.children[6].remove();
-            searchHistory.children[5].remove();
-            searchHistory.children[4].remove();
+            searchHistory.children[0].remove();
+            searchHistory.children[0].remove();
+            searchHistory.children[0].remove();
         }
         if (previousUserSearch2.length === 5) {
             if (searchHistory.children.length === 5) {
                 return;
             }
-            searchHistory.children[8].remove();
-            searchHistory.children[7].remove();
-            searchHistory.children[6].remove();
-            searchHistory.children[5].remove();
+            searchHistory.children[0].remove();
+            searchHistory.children[0].remove();
+            searchHistory.children[0].remove();
+            searchHistory.children[0].remove();
         }
         return;
     }
@@ -292,9 +293,9 @@ function appendChildrenElements(searchHistoryButton, x) {
     searchHistoryButton.addEventListener("click", assignPreviousSearches);
     searchHistory.appendChild(searchHistoryButton);
 }
-
+// search the clicked cat's name when you click on the buttons of the cat's name
 function assignPreviousSearches(event) {
-    console.log(previousUserSearch1[0], previousUserSearch2[0]);
+
     var catName = event.target.textContent;
     var catNameValue = event.target.getAttribute("value");
 
@@ -419,7 +420,7 @@ async function fetchBreedImages(catNameValue = "", catName = ""){
             break;
         }
     }
-    // if (!breedSelectBox.value === previousUserSearch1[0] || )
+    // this is to make sure that no two cats of the same breed get displayed twice, and only save it in local storage if it doesn't
     if (breedSelectBox.value ===  previousUserSearch1[0] || breedSelectBox.value ===  previousUserSearch1[1] || breedSelectBox.value ===  previousUserSearch1[2] || breedSelectBox.value ===  previousUserSearch1[3] || breedSelectBox.value ===  previousUserSearch1[4]) {
         return;
     }
@@ -429,6 +430,7 @@ async function fetchBreedImages(catNameValue = "", catName = ""){
     }
 }
 
+// same function as fetchBreedFacts, but in this one I bring the clicked variables inside and replace the value in the search bar
 async function fetchBreedFacts(catName = ""){
 
     var hasIntelligenceStatistic = false;
@@ -476,9 +478,6 @@ async function fetchBreedFacts(catName = ""){
 
             for(var counter = 0; counter < catFacts.length; counter++){
        
-            //for(var counter = 0; counter < 13; counter++){
-                
-
                 var propertyValue = catFacts[counter][1];
 
                 var propertyValueWords = setPropertyValueWords(propertyValue);
@@ -551,16 +550,15 @@ async function fetchBreedFacts(catName = ""){
                 }
             }
 
+
         }).catch(function(error){
 
             catchError(error, 1);
-
 
         });
     
     document.getElementById("weight-span").textContent = minimumWeight + " - " + maximumWeight + " pounds";
     document.getElementById("life-expectancy-span").textContent = minimumLifeExpectancy + " - " + maximumLifeExpectancy + " years";
-
 
     var intelligenceRanking = document.getElementById("intelligence");
     if(hasIntelligenceStatistic === false){
@@ -590,10 +588,10 @@ async function fetchBreedFacts(catName = ""){
 
 
 
-
         intelligenceRanking.classList.remove("is-hidden");
         intelligenceRanking.classList.add("is-block");
     }
+        // this is to make sure that no two cats of the same breed get displayed twice, and only save it if it doesn't
     if (doctoredSelectedBreed ===  previousUserSearch2[0] || doctoredSelectedBreed ===  previousUserSearch2[1] || doctoredSelectedBreed ===  previousUserSearch2[2] || doctoredSelectedBreed ===  previousUserSearch2[3] || doctoredSelectedBreed ===  previousUserSearch2[4]) {
         return;
     }
