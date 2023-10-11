@@ -136,19 +136,17 @@ async function fetchandDisplayRandomCatFact(){
         
         var data = await checkForBadFetch(response);
 
-        if(data !== null){
+        if (response.status === 200){
   
             var randomNumber = Math.floor(Math.random() * data.length)
             funFact3.textContent = data[randomNumber].text;
         }
-        // this is for just in case if the heroku API is not working. It had happened before.
-        if (response.status !== 200) {
-            
+        // this is for just in case if the heroku API is not fetching correctly. It had happened before.
+        else {
             var randomNumber = Math.floor(Math.random() * randomCatFacts.length);
             funFact3.textContent = randomCatFacts[randomNumber];
             return;
         }
-
     }).catch(function(error){
 
         catchError(error, 2);
