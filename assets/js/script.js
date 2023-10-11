@@ -7,9 +7,6 @@ var cardThree = document.getElementById("card-3-content");
 var speakerBtn = document.getElementById("animal-sound")
 speakerBtn.addEventListener("click", emitSound);
 
-
-
-
 //cards container and default hide
 var cardsContainer = document.querySelector('#cards-container-outer');
 cardsContainer.style.display = 'none';
@@ -351,8 +348,17 @@ async function fetchBreedImages(catNameValue = "", catName = ""){
     
     //show cards container and hide banner
     var heroContainer = document.querySelector('#cat-hero');
-    heroContainer.style.display = 'none';
-    cardsContainer.style.display = 'block';
+
+    if(heroContainer.classList.contains('is-block')){
+
+        heroContainer.classList.remove('is-block');
+        heroContainer.classList.add('is-hidden');
+        cardsContainer.classList.add('is-block');
+        cardsContainer.classList.remove('is-hidden');
+
+    }
+
+    
 
     var imageURLs = [];
 
