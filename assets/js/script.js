@@ -7,8 +7,6 @@ var cardThree = document.getElementById("card-3-content");
 var speakerBtn = document.getElementById("animal-sound")
 speakerBtn.addEventListener("click", emitSound);
 
-localStorage.clear();
-
 
 
 
