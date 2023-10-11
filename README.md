@@ -52,7 +52,7 @@ We downloaded the sound icon from [https://icons8.com/icons/set/sound](https://i
 
 We downloaded the cat banner image from [https://unsplash.com/s/photos/cat](https://unsplash.com/s/photos/cat)
 
-We copied the random cat facts from [https://github.com/vadimdemedes/cat-facts/blob/master/cat-facts.json] (https://github.com/vadimdemedes/cat-facts/blob/master/cat-facts.json)
+We copied the random cat facts in the random-cat-facts.js file from [https://github.com/vadimdemedes/cat-facts/blob/master/cat-facts.json](https://github.com/vadimdemedes/cat-facts/blob/master/cat-facts.json)
 
 We followed a tutorial to create a CSS linear gradient at [https://codepen.io/brucebrotherton/pen/wvqjORe](https://codepen.io/brucebrotherton/pen/wvqjORe)
 
