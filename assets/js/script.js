@@ -7,7 +7,6 @@ var cardThree = document.getElementById("card-3-content");
 var speakerBtn = document.getElementById("animal-sound")
 speakerBtn.addEventListener("click", emitSound);
 
-
 //cards container and default hide
 var cardsContainer = document.querySelector('#cards-container-outer');
 cardsContainer.style.display = 'none';
@@ -23,10 +22,17 @@ errorModalCloseButton.addEventListener("click", closeErrorModal);
 
 fetchButton.addEventListener("click", fetchCatData);
 
-async function fetchCatData(){
+async function fetchCatData(event){
+
+    var calledFromSearchHistoryButton = null;
+
+    if (event.target === document.getElementById("fetch-breed")){
+
+        calledFromSearchHistoryButton = 0;
+    }
 
     await fetchBreedImages();
-    await fetchBreedFacts();
+    await fetchBreedFacts("", calledFromSearchHistoryButton);
     await fetchandDisplayRandomCatFact();
 }
 
@@ -49,7 +55,7 @@ function initiation() {
         localStorage.setItem("previousUserSearch2",  JSON.stringify(previousUserSearch2));
     }
 
-    displayPreviousSearches();
+    displayPreviousSearches(0);
 }
 
 initiation();
@@ -212,7 +218,7 @@ function checkForBadFetch(response, flag = 0){
 // END: random cat facts section
 
 // this function displayed the previous 5 cats that user selected
-function displayPreviousSearches() {
+function displayPreviousSearches(calledFromSearchHistoryButton) {
 
     if(previousUserSearch2.length > 0 ){
         
@@ -221,75 +227,81 @@ function displayPreviousSearches() {
         searchHistoryTitle.classList.remove("is-hidden");
     }
 
-    if (previousUserSearch2.length < 6) {
-        for (i = 0; i < previousUserSearch2.length; i++) {
+    if(calledFromSearchHistoryButton === 0){
+
+        if (previousUserSearch2.length < 6) {
+
+            for (i = 0; i < previousUserSearch2.length; i++) {
+                
+                var searchHistoryButton = document.createElement("button");
+
+                if (previousUserSearch2[i].split("+")[1] === undefined) {
+                    searchHistoryButton.textContent = previousUserSearch2[i].split("+")[0];
+                    
+        
+                }
+                else {
+
+                    searchHistoryButton.textContent = previousUserSearch2[i].split("+")[0] + " " + previousUserSearch2[i].split("+")[1];
+                }
+
+                appendChildrenElements(searchHistoryButton, i);
+
+            }
             
+            if (previousUserSearch2.length === 2) {
+                if (searchHistory.children.length === 2) {
+                    return;
+                }
+                searchHistory.children[0].remove();
+            }
+            if (previousUserSearch2.length === 3) {
+                if (searchHistory.children.length === 3) {
+                    return;
+                }
+                searchHistory.children[0].remove();
+                searchHistory.children[0].remove();
+            }
+            if (previousUserSearch2.length === 4) {
+                if (searchHistory.children.length === 4) {
+                    return;
+                }
+                searchHistory.children[0].remove();
+                searchHistory.children[0].remove();
+                searchHistory.children[0].remove();
+            }
+            if (previousUserSearch2.length === 5) {
+                if (searchHistory.children.length === 5) {
+                    return;
+                }
+                searchHistory.children[0].remove();
+                searchHistory.children[0].remove();
+                searchHistory.children[0].remove();
+                searchHistory.children[0].remove();
+            }
+            return;
+        }
+
+        for (x = 0; x < 5 && x < previousUserSearch2.length; x++) {
             var searchHistoryButton = document.createElement("button");
 
-            if (previousUserSearch2[i].split("+")[1] === undefined) {
-                searchHistoryButton.textContent = previousUserSearch2[i].split("+")[0];
-                
-    
+            if (previousUserSearch2[x].split("+")[1] === undefined) {
+
+                searchHistoryButton.textContent = previousUserSearch2[x].split("+")[0];
+
             }
             else {
-                searchHistoryButton.textContent = previousUserSearch2[i].split("+")[0] + " " + previousUserSearch2[i].split("+")[1];
-            }
+                
+                searchHistoryButton.textContent = previousUserSearch2[x].split("+")[0] + " " + previousUserSearch2[x].split("+")[1];
+            } 
 
-            appendChildrenElements(searchHistoryButton, i);
-
+            appendChildrenElements(searchHistoryButton, x);
         }
-        
-        if (previousUserSearch2.length === 2) {
-            if (searchHistory.children.length === 2) {
-                return;
-            }
-            searchHistory.children[0].remove();
-        }
-        if (previousUserSearch2.length === 3) {
-            if (searchHistory.children.length === 3) {
-                return;
-            }
-            searchHistory.children[0].remove();
-            searchHistory.children[0].remove();
-        }
-        if (previousUserSearch2.length === 4) {
-            if (searchHistory.children.length === 4) {
-                return;
-            }
-            searchHistory.children[0].remove();
-            searchHistory.children[0].remove();
-            searchHistory.children[0].remove();
-        }
-        if (previousUserSearch2.length === 5) {
-            if (searchHistory.children.length === 5) {
-                return;
-            }
-            searchHistory.children[0].remove();
-            searchHistory.children[0].remove();
-            searchHistory.children[0].remove();
-            searchHistory.children[0].remove();
-        }
-        return;
-    }
-
-    for (x = 0; x < 5 && x < previousUserSearch2.length; x++) {
-        var searchHistoryButton = document.createElement("button");
-
-        if (previousUserSearch2[x].split("+")[1] === undefined) {
-            searchHistoryButton.textContent = previousUserSearch2[x].split("+")[0];
-
-        }
-        else {
-            searchHistoryButton.textContent = previousUserSearch2[x].split("+")[0] + " " + previousUserSearch2[x].split("+")[1];
-        } 
-
-        appendChildrenElements(searchHistoryButton, x);
-    }
     
-    console.log(searchHistory.children.length);
-    if (searchHistory.children.length >= 10) {
-        for (y = 4; y >= 0; y--) {
-            searchHistory.children[y].remove();
+        if (searchHistory.children.length >= 10) {
+            for (y = 4; y >= 0; y--) {
+                searchHistory.children[y].remove();
+            }
         }
     }
 }
@@ -308,9 +320,17 @@ function assignPreviousSearches(event) {
     var catName = event.target.textContent;
     var catNameValue = event.target.getAttribute("value");
 
+    if(catName !== ""){
+
+        calledFromSearchHistoryButton = 1
+
+    }
+
     fetchBreedImages(catNameValue, catName);
-    fetchBreedFacts(catName);
+    fetchBreedFacts(catName, calledFromSearchHistoryButton);
     fetchandDisplayRandomCatFact();
+
+    calledFromSearchHistoryButton = 0;
 }
 
 /* This function fetches the cat breed images from the cat API and displays them on the screen. */
@@ -328,8 +348,17 @@ async function fetchBreedImages(catNameValue = "", catName = ""){
     
     //show cards container and hide banner
     var heroContainer = document.querySelector('#cat-hero');
-    heroContainer.style.display = 'none';
-    cardsContainer.style.display = 'block';
+
+    if(heroContainer.classList.contains('is-block')){
+
+        heroContainer.classList.remove('is-block');
+        heroContainer.classList.add('is-hidden');
+        cardsContainer.classList.add('is-block');
+        cardsContainer.classList.remove('is-hidden');
+
+    }
+
+    
 
     var imageURLs = [];
 
@@ -428,15 +457,16 @@ async function fetchBreedImages(catNameValue = "", catName = ""){
         breedSelectBox.value ===  previousUserSearch1[2] || breedSelectBox.value ===  previousUserSearch1[3] || 
         breedSelectBox.value ===  previousUserSearch1[4]) {
         return;
-    }
-    else {
+
+    } else {
+
         previousUserSearch1.unshift(breedSelectBox.value);
         localStorage.setItem("previousUserSearch1", JSON.stringify(previousUserSearch1));
     }
 }
 
 //This function gets the facts about the various cat breeds from the Cats API.
-async function fetchBreedFacts(catName = ""){
+async function fetchBreedFacts(catName = "", calledFromSearchHistoryButton){
 
     var hasIntelligenceStatistic = false;
     var maximumLifeExpectancy = "";
@@ -470,8 +500,6 @@ async function fetchBreedFacts(catName = ""){
             }
 
         }).then(function(data){
-
-            console.log(data);
 
             var catFacts = Object.entries(data[0])
 
@@ -574,12 +602,6 @@ async function fetchBreedFacts(catName = ""){
 
     } else {
 
-
-
-
-
-
-
         intelligenceRanking.classList.remove("is-hidden");
         intelligenceRanking.classList.add("is-block");
     }
@@ -588,12 +610,14 @@ async function fetchBreedFacts(catName = ""){
         doctoredSelectedBreed ===  previousUserSearch2[2] || doctoredSelectedBreed ===  previousUserSearch2[3] ||
         doctoredSelectedBreed ===  previousUserSearch2[4]) {
         return;
-    }
-    else {
+    
+    } else if (calledFromSearchHistoryButton === 0){
+
         previousUserSearch2.unshift(doctoredSelectedBreed);
         localStorage.setItem("previousUserSearch2", JSON.stringify(previousUserSearch2));
-        displayPreviousSearches();
     }
+
+    displayPreviousSearches(calledFromSearchHistoryButton);
 }
 
 //Cat sound button 
