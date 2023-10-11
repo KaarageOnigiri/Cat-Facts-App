@@ -7,6 +7,8 @@ var cardThree = document.getElementById("card-3-content");
 var speakerBtn = document.getElementById("animal-sound")
 speakerBtn.addEventListener("click", emitSound);
 
+localStorage.clear();
+
 
 
 
@@ -35,7 +37,7 @@ async function fetchCatData(event){
     }
 
     await fetchBreedImages();
-    await fetchBreedFacts("", 0);
+    await fetchBreedFacts("", calledFromSearchHistoryButton);
     await fetchandDisplayRandomCatFact();
 }
 
@@ -58,7 +60,7 @@ function initiation() {
         localStorage.setItem("previousUserSearch2",  JSON.stringify(previousUserSearch2));
     }
 
-    displayPreviousSearches();
+    displayPreviousSearches(0);
 }
 
 initiation();
@@ -605,15 +607,13 @@ async function fetchBreedFacts(catName = "", calledFromSearchHistoryButton){
         doctoredSelectedBreed ===  previousUserSearch2[4]) {
         return;
     
-    } else {
+    } else if (calledFromSearchHistoryButton === 0){
 
         previousUserSearch2.unshift(doctoredSelectedBreed);
         localStorage.setItem("previousUserSearch2", JSON.stringify(previousUserSearch2));
-
-        displayPreviousSearches(calledFromSearchHistoryButton);
-        
-        
     }
+
+    displayPreviousSearches(calledFromSearchHistoryButton);
 }
 
 //Cat sound button 
