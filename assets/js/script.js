@@ -3,6 +3,7 @@ var breedSelectBox = document.getElementById("breed-select");
 var cardOne = document.getElementById("card-1-content");
 var cardTwo = document.getElementById("card-2-content");
 var cardThree = document.getElementById("card-3-content");
+var funFact3 = document.getElementById("fun-fact-3");
 
 var speakerBtn = document.getElementById("animal-sound")
 speakerBtn.addEventListener("click", emitSound);
@@ -12,7 +13,8 @@ var cardsContainer = document.querySelector('#cards-container-outer');
 cardsContainer.style.display = 'none';
 
 var errorMessage = document.getElementById("error-message");
-var errorFound = false;
+var errorFoundImages = 0;
+var errorFoundFacts = false;
 
 var breedTitle = document.getElementById("cat-breed-name")
 
@@ -124,8 +126,6 @@ Random Cat Fact API will go down every once in a while and thus the fetch reques
 This is a problem with that API, not this application.  */
 async function fetchandDisplayRandomCatFact(){
 
-    var funFact3 = document.getElementById("fun-fact-3");
-
     animalFactsApiUrl = "https://cat-fact.herokuapp.com/facts/";
 
     await fetch(animalFactsApiUrl, {
@@ -140,19 +140,24 @@ async function fetchandDisplayRandomCatFact(){
   
             var randomNumber = Math.floor(Math.random() * data.length)
             funFact3.textContent = data[randomNumber].text;
-        }
-        // this is for just in case if the heroku API is not working. It had happened before.
-        if (response.status !== 200) {
-            
-            var randomNumber = Math.floor(Math.random() * randomCatFacts.length);
-            funFact3.textContent = randomCatFacts[randomNumber];
+        } else {
+
+            generateCatFactFromBackup();
             return;
         }
+        
 
     }).catch(function(error){
 
         catchError(error, 2);
     });
+}
+
+// This function exists just in case if the heroku Cat Facts API is not working. It has happened before.
+function generateCatFactFromBackup(){
+
+    var randomNumber = Math.floor(Math.random() * randomCatFacts.length);
+    funFact3.textContent = randomCatFacts[randomNumber];
 }
 
 // This function closes the error modal if it is displayed after an error is thrown or returned.
@@ -173,17 +178,21 @@ function catchError(error, flag = 0){
     if(flag === 1){
 
         errorMessage.textContent = error.message + "!!  This happened when fetching cat statistics.";
+        errorMessage.textContent += "This tends to happen when submitting large numbers of requests at once.  Please wait a few moments and try again.";
 
     } else if(flag === 2){
 
-        errorMessage.textContent = error.message + "!! This happened when fetching a random cat fact."
+        generateCatFactFromBackup();
+        errorMessage.textContent += "The API call to pull a random cat fact has failed.  The application has pulled a back up cat fact instead."
+        
 
     } else {
 
         errorMessage.textContent = error.message + "!!  This happened when fetching cat images."
+        errorMessage.textContent += "This tends to happen when submitting large numbers of requests at once.  Please wait a few moments and try again.";
     }
 
-    errorMessage.textContent += "This tends to happen when submitting large numbers of requests at once.  Please wait a few moments and try again.";
+    
 }
 
 // If there is a bad fetch response (I defined that to mean something other than 200), the system displays the error modal.
@@ -200,7 +209,7 @@ function checkForBadFetch(response, flag = 0){
     
         } else if(flag === 2){
 
-            errorMessage.textContent = response.status + "!! This happened when fetching a random cat fact."
+            errorMessage.textContent = response.status + "!! This happened when fetching a random cat fact.  The application will pull a cat fact from back up."
 
         } else {
     
@@ -448,9 +457,16 @@ async function fetchBreedImages(catNameValue = "", catName = ""){
         }).catch(function(error){
 
             catchError(error);
-            errorFound = true;
+            errorFoundImages++;
             
         });
+
+        //If the system receives an error, it makes two more attempts to retrieve the images.  If they all fail, the system breaks out of the loop.
+        if(errorFoundImages === 3){
+
+            errorFoundImages = 0;
+            break;
+        }
     }
     // this is to make sure that no two cats of the same breed get displayed twice, and only save it in local storage if it doesn't
     if (breedSelectBox.value ===  previousUserSearch1[0] || breedSelectBox.value ===  previousUserSearch1[1] || 
@@ -506,8 +522,6 @@ async function fetchBreedFacts(catName = "", calledFromSearchHistoryButton){
             removefromResults(catFacts, "image_link");
             removefromResults(catFacts, "name");
             removefromResults(catFacts, "general_health");
-
-            var randomFact = "";
 
             // This for loop populates the cards with most of the cat facts fetched from the Cats API.
             for(var counter = 0; counter < catFacts.length; counter++){
@@ -587,9 +601,40 @@ async function fetchBreedFacts(catName = "", calledFromSearchHistoryButton){
 
         }).catch(function(error){
 
+            errorFoundFacts++
             catchError(error, 1);
 
+            var cardOneBack =  document.getElementById("card-1-back");
+            var cardOneStatistics = cardOneBack.querySelectorAll('p');
+
+            for(pCounter1 = 0; pCounter1 < cardOneStatistics.length; pCounter1++){
+
+            cardOneStatistics[pCounter1].textContent = "Error!";
+            
+            }
+            
+            
+
+            var cardTwoBack =  document.getElementById("card-2-back");
+            var cardTwoStatistics = cardTwoBack.querySelectorAll('p');
+
+            for(pCounter2 = 0; pCounter2 < cardTwoStatistics.length; pCounter2++){
+
+            cardTwoStatistics[pCounter2].textContent = "Error!";
+
+            errorFoundFacts = true;
+
+            }
+
+            return;
+    
         });
+    
+    if(errorFoundFacts === true){
+
+        errorFoundFacts = false;
+        return;
+    }
     
     document.getElementById("weight-span").textContent = minimumWeight + " - " + maximumWeight + " pounds";
     document.getElementById("life-expectancy-span").textContent = minimumLifeExpectancy + " - " + maximumLifeExpectancy + " years";

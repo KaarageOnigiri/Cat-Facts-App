@@ -1,4 +1,5 @@
-[
+var randomCatFacts = [
+
 	"Every year, nearly four million cats are eaten in Asia",
 	"On average, cats spend 2/3 of every day sleeping",
 	"Unlike dogs, cats do not have a sweet tooth",
@@ -114,7 +115,7 @@
 	"A third of cats' time spent awake is usually spent cleaning themselves",
 	"A female cat is also known to be called a queen or a molly",
 	"Want to call a hairball by its scientific name? Next time, say the word bezoar",
-	"Cats have a 5 toes on their front paws and 4 on each back paw",
+	"Cats have five toes on their front paws and four on each back paw",
 	"In multi-pet households, cats are able to get along especially well with dogs if they're introduced when the cat is under 6 months old and the dog is under one year old",
 	"Twenty-five percent of cat owners use a blow drier on their cats after bathing",
 	"Rather than nine months, cats' pregnancies last about nine weeks",
