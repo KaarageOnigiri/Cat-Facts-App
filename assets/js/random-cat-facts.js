@@ -1,5 +1,5 @@
 var randomCatFacts = [
-
+  
 	"Every year, nearly four million cats are eaten in Asia",
 	"On average, cats spend 2/3 of every day sleeping",
 	"Unlike dogs, cats do not have a sweet tooth",
