@@ -177,19 +177,19 @@ function catchError(error, flag = 0){
 
     if(flag === 1){
 
-        errorMessage.textContent = error.message + "!!  This happened when fetching cat statistics.";
-        errorMessage.textContent += "This tends to happen when submitting large numbers of requests at once.  Please wait a few moments and try again.";
+        errorMessage.textContent = error.message + "!!  This happened when fetching cat statistics.\
+        This tends to happen when submitting large numbers of requests at once.  Please wait a few moments and try again.";
 
     } else if(flag === 2){
 
         generateCatFactFromBackup();
-        errorMessage.textContent += "The API call to pull a random cat fact has failed.  The application has pulled a back up cat fact instead."
+        errorMessage.textContent = "The API call to pull a random cat fact has failed.  The application has pulled a back up cat fact instead."
         
 
     } else {
 
-        errorMessage.textContent = error.message + "!!  This happened when fetching cat images."
-        errorMessage.textContent += "This tends to happen when submitting large numbers of requests at once.  Please wait a few moments and try again.";
+        errorMessage.textContent = error.message + "!!  This happened when fetching cat images. \
+        This tends to happen when submitting large numbers of requests at once.  Please wait a few moments and try again.";
     }
 
     
@@ -414,13 +414,19 @@ async function fetchBreedImages(catNameValue = "", catName = ""){
                     /* Unfortunately, pictures Hb2N6tYTJ.jpg, uvt2Psd9O.jpg, MJWtDz75E.jpg, and g1j3wRjgx.jpg (a picture of an orange tabby cat laying on a bed or couch, 
                     looking rather sad and looking up, toward the camera) are the same actual images but have four different IDs.  As such, the normal method of comparing the IDs to 
                     elminiate duplicates doesn't work for those four images, so I filtered them out manually. Additionally, two of the aforementioned images are returned when searching for
-                    Abyssinian cats, and the other two are returned when searching for Agean cats. I have no idea why this is, other than it being a fault of the Cat API.*/
+                    Abyssinian cats, and the other two are returned when searching for Agean cats. I have no idea why this is, other than it being a fault of the Cat API.  
+                    The same issue happened with images 8cXEkQQwc.jpg, iY76694gN.jpg, K3eHRIQXM.jpg, so I once again filtered them out manually.*/
                     if(imageURLs[counter1] === imageURLs[counter2] || imageURLs[0] === "assets/images/black-screen.JPG" || 
                     (imageURLs[counter1] === "https://cdn2.thecatapi.com/images/Hb2N6tYTJ.jpg" && imageURLs[counter2] === "https://cdn2.thecatapi.com/images/uvt2Psd9O.jpg") || 
                     (imageURLs[counter2] === "https://cdn2.thecatapi.com/images/Hb2N6tYTJ.jpg" && imageURLs[counter1] === "https://cdn2.thecatapi.com/images/uvt2Psd9O.jpg") || 
                     (imageURLs[counter1] === "https://cdn2.thecatapi.com/images/MJWtDz75E.jpg" && imageURLs[counter2] === "https://cdn2.thecatapi.com/images/g1j3wRjgx.jpg") || 
-                    (imageURLs[counter2] === "https://cdn2.thecatapi.com/images/MJWtDz75E.jpg" && imageURLs[counter1] === "https://cdn2.thecatapi.com/images/g1j3wRjgx.jpg")) {
-                        
+                    (imageURLs[counter2] === "https://cdn2.thecatapi.com/images/MJWtDz75E.jpg" && imageURLs[counter1] === "https://cdn2.thecatapi.com/images/g1j3wRjgx.jpg") || 
+                    (imageURLs[counter2] === "https://cdn2.thecatapi.com/images/iY76694gN.jpg" && imageURLs[counter1] === "https://cdn2.thecatapi.com/images/8cXEkQQwc.jpg") ||
+                    (imageURLs[counter2] === "https://cdn2.thecatapi.com/images/8cXEkQQwc.jpg" && imageURLs[counter1] === "https://cdn2.thecatapi.com/images/iY76694gN.jpg") ||
+                    (imageURLs[counter2] === "https://cdn2.thecatapi.com/images/iY76694gN.jpg" && imageURLs[counter1] === "https://cdn2.thecatapi.com/images/K3eHRIQXM.jpg") ||
+                    (imageURLs[counter2] === "https://cdn2.thecatapi.com/images/K3eHRIQXM.jpg" && imageURLs[counter1] === "https://cdn2.thecatapi.com/images/iY76694gN.jpg") ||
+                    (imageURLs[counter2] === "https://cdn2.thecatapi.com/images/K3eHRIQXM.jpg" && imageURLs[counter1] === "https://cdn2.thecatapi.com/images/8cXEkQQwc.jpg") ||
+                    (imageURLs[counter2] === "https://cdn2.thecatapi.com/images/8cXEkQQwc.jpg" && imageURLs[counter1] === "https://cdn2.thecatapi.com/images/K3eHRIQXM.jpg")) {    
                         imageURLs.splice(imageURLs.length - 1, 1);
                         duplicateImage = true;
                         fetchAttempts++;
